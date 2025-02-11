@@ -21,7 +21,7 @@ struct tpcampos{
 typedef struct tpcampos Campos;
 
 struct tpstatus{
-	bool Status;
+	char Status;
 	struct tpstatus *prox;
 };
 typedef struct tpstatus Status;
