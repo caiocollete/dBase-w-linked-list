@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <conio2.h>
+#include <windows.h>
 
 #include "db.h"
 #include "commands.h"
@@ -49,7 +51,8 @@ Command processarComando(char *entrada) {
 
         strncpy(command.value, entrada + strlen(prefixos[i]), MAXCOMMAND - 1);
         command.value[MAXCOMMAND - 1] = '\0';
-    } else {
+    } 
+	else {
         command.type = -1;
         strcpy(command.value, "INVALID COMMAND");
     }
@@ -57,15 +60,20 @@ Command processarComando(char *entrada) {
     return command;
 }
 
+
 int main(void){
-	
+
 	Command command;
 	char ent[MAXCOMMAND];
 	
-	printf("[db@localhost] $ ");
-	gets(ent);
-	command=processarComando(ent);
-	printf("[%d] %s", command.type, command.value);
+	while(strcmp("QUIT", toupper(ent))!=0){
+		printf("[db@localhost] $ ");
+		gets(ent);
+		command=processarComando(ent);
+		printf("[%d] %s\n", command.type, command.value);
+		Sleep(3000); // 3 sec
+		system("cls");
+	}
 	
 	return 0;
 }
