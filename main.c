@@ -1,8 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <conio2.h>
-#include <windows.h>
+#include <ctype.h>
+
+#include "settodefault.h"
+
+#ifdef _WIN32
+    #include <windows.h>
+    #include <conio2.h>
+#else
+    #include <unistd.h> // sleep on MacOS
+    #include "./conio3/conio3.h"
+#endif
+
 
 #include "db.h"
 #include "commands.h"
@@ -17,26 +27,33 @@ struct tpcommand{
 typedef struct tpcommand Command;
 
 const char *prefixos[NUM_PREFIXOS] = {
-    "SET DEFAULT TO ",
-    "CREATE ",
-    "DIR", // 3
-    "QUIT", // 4
-    "LIST STRUCTURE", // 5
-    "APPEND", // 6
+    "SET DEFAULT TO ", // 0
+    "CREATE ", // 1
+    "DIR", // 2
+    "QUIT", // 3
+    "LIST STRUCTURE", // 4
+    "APPEND", // 5
+    "LIST FOR NOME = ", // 6
     "LIST", // 7
-    "LIST FOR NOME = ",
-    "CLEAR", // 9
-    "LOCATE FOR NOME = ",
-    "GOTO ",
-    "DISPLAY", //12
-    "EDIT", //13
-    "DELETE", //14
-    "DELETE ALL", //15
-    "RECALL", //16
-    "SET DELETED ",
-    "PACK", //18
-    "ZAP" //19
+    "CLEAR", // 8
+    "LOCATE FOR NOME = ", // 9
+    "GOTO ", // 10
+    "DISPLAY", //11
+    "EDIT", //12
+    "DELETE ALL", // 13
+    "DELETE", // 14
+    "RECALL", // 15
+    "SET DELETED ", // 16
+    "PACK", // 17
+    "ZAP" // 18
 };
+
+
+void to_upper_str(char *str) {
+    for (int i = 0; str[i]; i++) {
+        str[i] = toupper((unsigned char)str[i]);
+    }
+}
 
 Command processarComando(char *entrada) {
     Command command;
@@ -63,16 +80,38 @@ Command processarComando(char *entrada) {
 
 int main(void){
 
+    dBase *dbase = NULL, *dbAtual=NULL;
+    
 	Command command;
 	char ent[MAXCOMMAND];
+    ent[strcspn(ent, "\n")] = 0;
+    to_upper_str(ent);
 	
-	while(strcmp("QUIT", toupper(ent))!=0){
+	while(strcmp("QUIT", ent)!=0){
 		printf("[db@localhost] $ ");
-		gets(ent);
+        
+        fgets(ent, sizeof(ent), stdin);
+        ent[strcspn(ent, "\n")] = 0;
+        to_upper_str(ent);
+        
 		command=processarComando(ent);
-		printf("[%d] %s\n", command.type, command.value);
-		Sleep(3000); // 3 sec
-		system("cls");
+        printf("[%d] %s\n", command.type, command.value);
+        
+        switch(command.value){
+            case 0: setDefault(&dbase, command.value, &dbAtual);
+                    break;
+            case 1: break;
+        }
+        
+		
+        
+#ifdef _WIN32
+        sleep(3000); // milisec
+        system("cls");
+#else
+        sleep(3); // sec
+        system("clear");
+#endif
 	}
 	
 	return 0;

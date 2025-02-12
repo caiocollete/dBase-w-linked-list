@@ -1,0 +1,99 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXFileReference section */
+		2595A5682D5C2BB500AA7479 /* commands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = commands.h; sourceTree = "<group>"; };
+		2595A5692D5C2BB500AA7479 /* c.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = c.c; sourceTree = "<group>"; };
+		2595A56A2D5C2BB500AA7479 /* conio3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = conio3.h; sourceTree = "<group>"; };
+		2595A56B2D5C2BB500AA7479 /* libc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libc.a; sourceTree = "<group>"; };
+		2595A56C2D5C2BB500AA7479 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		2595A56D2D5C2BB500AA7479 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		2595A56F2D5C2BB500AA7479 /* db.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = db.h; sourceTree = "<group>"; };
+		2595A5702D5C2BB500AA7479 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		2595A5712D5C2BD000AA7479 /* settodefault.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = settodefault.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		2595A5612D5C2B6F00AA7479 = {
+			isa = PBXGroup;
+			children = (
+				2595A5712D5C2BD000AA7479 /* settodefault.h */,
+				2595A5682D5C2BB500AA7479 /* commands.h */,
+				2595A56E2D5C2BB500AA7479 /* conio3 */,
+				2595A56F2D5C2BB500AA7479 /* db.h */,
+				2595A5702D5C2BB500AA7479 /* main.c */,
+			);
+			sourceTree = "<group>";
+		};
+		2595A56E2D5C2BB500AA7479 /* conio3 */ = {
+			isa = PBXGroup;
+			children = (
+				2595A5692D5C2BB500AA7479 /* c.c */,
+				2595A56A2D5C2BB500AA7479 /* conio3.h */,
+				2595A56B2D5C2BB500AA7479 /* libc.a */,
+				2595A56C2D5C2BB500AA7479 /* Makefile */,
+				2595A56D2D5C2BB500AA7479 /* README.md */,
+			);
+			path = conio3;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		2595A5622D5C2B6F00AA7479 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1620;
+			};
+			buildConfigurationList = 2595A5652D5C2B6F00AA7479 /* Build configuration list for PBXProject "dbwlinkedlist" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2595A5612D5C2B6F00AA7479;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		2595A5662D5C2B6F00AA7479 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		2595A5672D5C2B6F00AA7479 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2595A5652D5C2B6F00AA7479 /* Build configuration list for PBXProject "dbwlinkedlist" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2595A5662D5C2B6F00AA7479 /* Debug */,
+				2595A5672D5C2B6F00AA7479 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2595A5622D5C2B6F00AA7479 /* Project object */;
+}
