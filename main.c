@@ -6,11 +6,10 @@
 #define MAXCOMMAND 128
 #define NUM_PREFIXOS 19
 
-#include "db.h"
-#include "commands.h"
+#include "./database_structure/db.h"
 
-
-#include "settodefault.h"
+#include "./commands/commands.h"
+#include "./commands/settodefault.h"
 
 #ifdef _WIN32
     #include <windows.h>
