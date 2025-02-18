@@ -7,39 +7,41 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		2595A5682D5C2BB500AA7479 /* commands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = commands.h; sourceTree = "<group>"; };
-		2595A5692D5C2BB500AA7479 /* c.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = c.c; sourceTree = "<group>"; };
-		2595A56A2D5C2BB500AA7479 /* conio3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = conio3.h; sourceTree = "<group>"; };
-		2595A56B2D5C2BB500AA7479 /* libc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libc.a; sourceTree = "<group>"; };
-		2595A56C2D5C2BB500AA7479 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		2595A56D2D5C2BB500AA7479 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		2595A56F2D5C2BB500AA7479 /* db.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = db.h; sourceTree = "<group>"; };
 		2595A5702D5C2BB500AA7479 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		2595A5712D5C2BD000AA7479 /* settodefault.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = settodefault.h; sourceTree = "<group>"; };
+		25A9628C2D6410E200088172 /* commands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = commands.h; sourceTree = "<group>"; };
+		25A9628D2D6410E200088172 /* createdbf.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = createdbf.h; sourceTree = "<group>"; };
+		25A9628E2D6410E200088172 /* settodefault.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = settodefault.h; sourceTree = "<group>"; };
+		25A962902D64110300088172 /* dir.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dir.h; sourceTree = "<group>"; };
+		25A962912D64111100088172 /* db.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = db.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		2595A5612D5C2B6F00AA7479 = {
 			isa = PBXGroup;
 			children = (
-				2595A5712D5C2BD000AA7479 /* settodefault.h */,
-				2595A5682D5C2BB500AA7479 /* commands.h */,
-				2595A56E2D5C2BB500AA7479 /* conio3 */,
-				2595A56F2D5C2BB500AA7479 /* db.h */,
 				2595A5702D5C2BB500AA7479 /* main.c */,
+				25A9628F2D6410E200088172 /* commands */,
+				25A962922D64111100088172 /* database_structure */,
 			);
 			sourceTree = "<group>";
 		};
-		2595A56E2D5C2BB500AA7479 /* conio3 */ = {
+		25A9628F2D6410E200088172 /* commands */ = {
 			isa = PBXGroup;
 			children = (
-				2595A5692D5C2BB500AA7479 /* c.c */,
-				2595A56A2D5C2BB500AA7479 /* conio3.h */,
-				2595A56B2D5C2BB500AA7479 /* libc.a */,
-				2595A56C2D5C2BB500AA7479 /* Makefile */,
-				2595A56D2D5C2BB500AA7479 /* README.md */,
+				25A962902D64110300088172 /* dir.h */,
+				25A9628C2D6410E200088172 /* commands.h */,
+				25A9628D2D6410E200088172 /* createdbf.h */,
+				25A9628E2D6410E200088172 /* settodefault.h */,
 			);
-			path = conio3;
+			path = commands;
+			sourceTree = "<group>";
+		};
+		25A962922D64111100088172 /* database_structure */ = {
+			isa = PBXGroup;
+			children = (
+				25A962912D64111100088172 /* db.h */,
+			);
+			path = database_structure;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

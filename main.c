@@ -10,13 +10,14 @@
 
 #include "./commands/commands.h"
 #include "./commands/settodefault.h"
+#include "./commands/createdbf.h"
+#include "./commands/dir.h"
 
 #ifdef _WIN32
     #include <windows.h>
     #include <conio2.h>
 #else
     #include <unistd.h> // sleep on MacOS
-    #include "./conio3/conio3.h"
 #endif
 
 
@@ -43,7 +44,9 @@ int main(void){
             case 0: setDefault(&dbase, command.value, &dbAtual);
             		printf("Defining an disk...");
                     break;
-            case 1: break;
+            case 1: createdbf(dbAtual, command.value); break;
+            case 2: dir(dbAtual); break;
+            
         }
         
         sleep(3); // sec

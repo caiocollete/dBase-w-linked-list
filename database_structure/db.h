@@ -32,6 +32,7 @@ struct tpunidade{
 	char Data[MAXDATA]; // "01/01/2000"
 	char Hora[MAXHORA]; // "00:00"
 	struct tpstatus *Status;
+    struct tpcampos *Campos;
 };
 typedef struct tpunidade dUnidade;
 
