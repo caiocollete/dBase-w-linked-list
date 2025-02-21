@@ -9,21 +9,22 @@ const char *prefixos[NUM_PREFIXOS] = {
     "CREATE ", // 1
     "DIR", // 2
     "QUIT", // 3
-    "LIST STRUCTURE", // 4
-    "APPEND", // 5
-    "LIST FOR NOME = ", // 6
-    "LIST", // 7
-    "CLEAR", // 8
-    "LOCATE FOR NOME = ", // 9
-    "GOTO ", // 10
-    "DISPLAY", //11
-    "EDIT", //12
-    "DELETE ALL", // 13
-    "DELETE", // 14
-    "RECALL", // 15
-    "SET DELETED ", // 16
-    "PACK", // 17
-    "ZAP" // 18
+    "USE ", // 4
+    "LIST STRUCTURE", // 5
+    "APPEND", // 6
+    "LIST FOR NOME = ", // 7
+    "LIST", // 8
+    "CLEAR", // 9
+    "LOCATE FOR NOME = ", // 10
+    "GOTO ", // 11
+    "DISPLAY", //12
+    "EDIT", //13
+    "DELETE ALL", // 14
+    "DELETE", // 15
+    "RECALL", // 16
+    "SET DELETED ", // 17
+    "PACK", // 18
+    "ZAP" // 19
 };
 
 

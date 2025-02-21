@@ -3,8 +3,12 @@
 #define MAXHORA 5
 #define MAXFIELDNAME 64
 
+union dados{
+    float F;
+    char *C;
+};
 struct tppdados{
-	int ValorN;
+	union dados Valor;
 	struct tppatual *prox;
 };
 typedef	struct tppdados Pdados;

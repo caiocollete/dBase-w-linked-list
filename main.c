@@ -4,7 +4,7 @@
 #include <ctype.h>
 
 #define MAXCOMMAND 128
-#define NUM_PREFIXOS 19
+#define NUM_PREFIXOS 20
 
 #include "./database_structure/db.h"
 
@@ -12,6 +12,7 @@
 #include "./commands/settodefault.h"
 #include "./commands/createdbf.h"
 #include "./commands/dir.h"
+#include "./commands/list.h"
 
 #ifdef _WIN32
     #include <windows.h>
@@ -24,6 +25,7 @@
 int main(void){
 
     dBase *dbase = NULL, *dbAtual=NULL;
+    dUnidade *unidadeAtual=NULL;
     
 	Command command;
 	char ent[MAXCOMMAND];
@@ -46,6 +48,10 @@ int main(void){
                     break;
             case 1: createdbf(dbAtual, command.value); break;
             case 2: dir(dbAtual); break;
+            case 3: /*QUIT*/ break;
+            case 4: use(dbAtual, &unidadeAtual,command.value); break;
+            case 5: liststructure(unidadeAtual, command.value); break;
+            case 6: append(&unidadeAtual); break;
             
         }
         

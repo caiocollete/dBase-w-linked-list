@@ -7,12 +7,15 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		25540BD92D651B7D00664031 /* use.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = use.h; sourceTree = "<group>"; };
 		2595A5702D5C2BB500AA7479 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		25A9628C2D6410E200088172 /* commands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = commands.h; sourceTree = "<group>"; };
 		25A9628D2D6410E200088172 /* createdbf.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = createdbf.h; sourceTree = "<group>"; };
 		25A9628E2D6410E200088172 /* settodefault.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = settodefault.h; sourceTree = "<group>"; };
 		25A962902D64110300088172 /* dir.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dir.h; sourceTree = "<group>"; };
 		25A962912D64111100088172 /* db.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = db.h; sourceTree = "<group>"; };
+		25B70EA12D66A31C00AE29DA /* list.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
+		25B70EA22D66A85900AE29DA /* append.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = append.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -28,10 +31,13 @@
 		25A9628F2D6410E200088172 /* commands */ = {
 			isa = PBXGroup;
 			children = (
+				25540BD92D651B7D00664031 /* use.h */,
 				25A962902D64110300088172 /* dir.h */,
 				25A9628C2D6410E200088172 /* commands.h */,
 				25A9628D2D6410E200088172 /* createdbf.h */,
 				25A9628E2D6410E200088172 /* settodefault.h */,
+				25B70EA12D66A31C00AE29DA /* list.h */,
+				25B70EA22D66A85900AE29DA /* append.h */,
 			);
 			path = commands;
 			sourceTree = "<group>";
