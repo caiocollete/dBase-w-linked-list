@@ -13,6 +13,8 @@
 #include "./commands/createdbf.h"
 #include "./commands/dir.h"
 #include "./commands/list.h"
+#include "./commands/use.h"
+#include "./commands/append.h"
 
 #ifdef _WIN32
     #include <windows.h>
@@ -26,11 +28,12 @@ int main(void){
 
     dBase *dbase = NULL, *dbAtual=NULL;
     dUnidade *unidadeAtual=NULL;
-    
 	Command command;
 	char ent[MAXCOMMAND];
     ent[strcspn(ent, "\n")] = 0;
     to_upper_str(ent);
+    
+    dataseeder(&dbase);
 	
 	while(strcmp("QUIT", ent)!=0){
 		printf("[db@localhost] $ ");
@@ -50,7 +53,7 @@ int main(void){
             case 2: dir(dbAtual); break;
             case 3: /*QUIT*/ break;
             case 4: use(dbAtual, &unidadeAtual,command.value); break;
-            case 5: liststructure(unidadeAtual, command.value); break;
+            case 5: liststructure(dbAtual, unidadeAtual, command.value); break;
             case 6: append(&unidadeAtual); break;
             
         }

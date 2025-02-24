@@ -1,8 +1,8 @@
 void createdbf(dBase *db, char *namedbf){
-    dUnidade *novaUnidade;
+    Campos *novoCampo;
     dUnidade *nova = (dUnidade*)malloc(sizeof(dUnidade));
-    char data[MAXDATA], FieldName[MAXFIELDNAME], Type;
-    int Desc, Width;
+    char FieldName[MAXFIELDNAME], Type;
+    int Dec, Width;
     strcpy(FieldName, " ");
 #ifdef _WIN32
         system("cls");
@@ -11,10 +11,10 @@ void createdbf(dBase *db, char *namedbf){
 #endif
     strcpy(nova->NomeDBF, namedbf);
     printf("Data (00/00/0000): ");
-    fgets(data, sizeof(data), stdin);
+    fgets(nova->Data, sizeof(MAXDATA), stdin);
     printf("\n");
     printf("Hora (00:00): ");
-    fgets(Hora, sizeof(Hora), stdin);
+    fgets(nova->Hora, sizeof(MAXHORA), stdin);
     printf("\n");
 #ifdef _WIN32
         system("cls");
@@ -33,14 +33,14 @@ void createdbf(dBase *db, char *namedbf){
         scanf("%d", &Width);
         printf("\n");
         printf("Desc: ");
-        scanf("%d", &Desc);
+        scanf("%d", &Dec);
         printf("\n");
         
         // criar uma struct Campos e inserir os dados nela
         novoCampo=(Campos*)malloc(sizeof(Campos));
         strcpy(novoCampo->FieldName, FieldName);
         novoCampo->Type = Type;
-        novoCampo->Desc = Desc;
+        novoCampo->Dec = Dec;
         novoCampo->Width = Width;
         novoCampo->Pdados = NULL;
         novoCampo->prox = NULL;
@@ -50,7 +50,7 @@ void createdbf(dBase *db, char *namedbf){
             nova->Campos = novoCampo;
         }
         else{
-            Campo *aux = nova->Campos;
+            Campos *aux = nova->Campos;
             while(aux->prox!=NULL){
                 aux = aux->prox;
             }

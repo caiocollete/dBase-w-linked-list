@@ -12,7 +12,7 @@ void liststructure(dBase *dbAtual, dUnidade *unid, char *value){
         auxp=aux->Pdados;
         while(auxp!=NULL){
             dataRecords++;
-            auxp=auxp->prox;
+            auxp = auxp->prox;
         }
     }
     printf("Number of data records: %d\n", dataRecords);
@@ -20,7 +20,7 @@ void liststructure(dBase *dbAtual, dUnidade *unid, char *value){
     printf("Field\tFieldName\tType\tWidth\tDec\n");
     aux=unid->Campos; dataRecords=1;
     while(aux!=NULL){
-        printf("%d\t%s\t%c\t%d\t%d\n", dataRecords, unid->FieldName, unid->Type, unid->Width, unid->Dec);
+        printf("%d\t%s\t%c\t%d\t%d\n", dataRecords, aux->FieldName, aux->Type, aux->Width, aux->Dec);
         dataRecords++;
     }
 }
