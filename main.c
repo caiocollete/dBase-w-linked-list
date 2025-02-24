@@ -46,23 +46,22 @@ int main(void){
         printf("[%d] %s\n", command.type, command.value);
         
         switch(command.type){
-            case 0: setDefault(&dbase, command.value, &dbAtual);
-            		printf("Defining an disk...");
-                    break;
+            case 0: setDefault(&dbase, command.value, &dbAtual, &unidadeAtual); break;
             case 1: createdbf(dbAtual, command.value); break;
             case 2: dir(dbAtual); break;
             case 3: /*QUIT*/ break;
             case 4: use(dbAtual, &unidadeAtual,command.value); break;
-            case 5: liststructure(dbAtual, unidadeAtual, command.value); break;
+            case 5: liststructure(dbAtual, unidadeAtual); break;
             case 6: append(&unidadeAtual); break;
             
         }
         
-        sleep(3); // sec
         
 #ifdef _WIN32
+		getch();
         system("cls");
 #else
+		sleep(3);
         system("clear");
 #endif
 	}

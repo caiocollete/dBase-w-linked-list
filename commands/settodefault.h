@@ -1,4 +1,4 @@
-void setDefault(dBase **dbase, char *disco, dBase **dbAtual){
+void setDefault(dBase **dbase, char *disco, dBase **dbAtual, dUnidade **unidade){
     dBase *novo, *aux;
     novo= (dBase*)malloc(sizeof(dBase));
     novo->ant = NULL;
@@ -6,7 +6,9 @@ void setDefault(dBase **dbase, char *disco, dBase **dbAtual){
     strcpy(novo->disco, disco);
     novo->unidade=NULL;
     if(*dbase==NULL){
-        *dbase=novo;
+        *dbase = novo;
+        *dbAtual = *dbase;
+        *unidade = novo->unidade;
     }
     else{
         aux = *dbase;
@@ -15,10 +17,12 @@ void setDefault(dBase **dbase, char *disco, dBase **dbAtual){
         }
         if(strcmp(aux->disco, disco)==0){ // ACHOU O DISCO, OU SEJA, ELE JA ESTA ADICIONADO
             *dbAtual = aux;
+            *unidade = aux->unidade;
         }
         else{ // NAO ACHOU O DISCO
             *dbase = novo;
             *dbAtual = *dbase;
+            *unidade = novo->unidade;
         }
     }
 }

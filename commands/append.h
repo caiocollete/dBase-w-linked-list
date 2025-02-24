@@ -1,39 +1,57 @@
-void append(dUnidade **unidade){
-    Campos *aux;
-    Pdados *novo, *auxDados;
-    if(*unidade!=NULL){
-    	printf("Define an DB to use\n You can define with 'USE name.dbf'\n");
+void append(dUnidade **unidade) {
+    if (*unidade == NULL) {
+        printf("Define a DB to use\nYou can define with 'USE name.dbf'\n");
+        return;
     }
-    else{
-    	float N;
-    	char D[MAXDATA];
-		int L;
-    	char C[MAXBYTES];
-    	char M[MAXBYTES];
-    	
-    	aux = (*unidade)->Campos;
-    	auxDados = aux->Pdados;
-    	while(aux!=NULL){
-    		novo = (Pdados*)malloc(sizeof(Pdados));
-    	
-			printf("%s: ", aux->FieldName);
-    		switch(aux->Type){
-	    		case 'N': scanf("&f", N); novo->Valor.N = N; break;
-	    		case 'D': printf("(00/00/0000) "); fgets(D, sizeof(D), stdin); strcpy(novo->Valor.D, D); break;
-	    		case 'L': printf("(0/1) "); scanf("&d", L); novo->Valor.L = L; break;
-	    		case 'C': fgets(C, sizeof(C), stdin); strcpy(novo->Valor.C, C); break;
-	    		case 'M': fgets(M, sizeof(M), stdin); strcpy(novo->Valor.M, M); break;
-    		}
-			printf("\n");
-			
-			while(auxDados->prox!=NULL){
-				auxDados=auxDados->prox;
-			}
-			
-			auxDados->prox = novo;
-			
-			aux = aux->prox;
-			auxDados = aux->Pdados;
-    	}
+
+    Campos *aux = (*unidade)->Campos;
+    
+    while (aux != NULL) {
+        Pdados *novo = (Pdados *)malloc(sizeof(Pdados));
+        if (novo == NULL) {
+            printf("Erro ao alocar memória!\n");
+            return;
+        }
+        novo->prox = NULL;
+
+        printf("%s: ", aux->FieldName);
+        switch (aux->Type) {
+            case 'N': 
+                scanf("%f", &novo->Valor.N);
+                break;
+            case 'D':
+                printf("(00/00/0000) ");
+                fgets(novo->Valor.D, sizeof(novo->Valor.D), stdin);
+                novo->Valor.D[strcspn(novo->Valor.D, "\n")] = '\0'; // Remove o '\n'
+                break;
+            case 'L': 
+                scanf("%d", &novo->Valor.L);
+                break;
+            case 'C': 
+                fgets(novo->Valor.C, sizeof(novo->Valor.C), stdin);
+                novo->Valor.C[strcspn(novo->Valor.C, "\n")] = '\0'; // Remove o '\n'
+                break;
+            case 'M': 
+                fgets(novo->Valor.M, sizeof(novo->Valor.M), stdin);
+                novo->Valor.M[strcspn(novo->Valor.M, "\n")] = '\0'; // Remove o '\n'
+                break;
+            default:
+                printf("Tipo desconhecido!\n");
+                free(novo);
+                return;
+        }
+
+        // Adiciona na lista de dados do campo correspondente
+        if (aux->Pdados == NULL) {
+            aux->Pdados = novo;
+        } else {
+            Pdados *auxDados = aux->Pdados;
+            while (auxDados->prox != NULL) {
+                auxDados = auxDados->prox;
+            }
+            auxDados->prox = novo;
+        }
+
+        aux = aux->prox; // Avança para o próximo campo
     }
 }

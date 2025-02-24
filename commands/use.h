@@ -13,7 +13,6 @@ void use(dBase *atual, dUnidade **unidade, char *target){
 	        }
 	        else
 	            printf("[%s] was not found", target);
-	        sleep(3);
     	}
         else
         	printf("UNIT isn't DEFINED\n");
