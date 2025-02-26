@@ -46,38 +46,44 @@ void liststructure(dBase *dbAtual, dUnidade *unid){
 
 
 
-void list(dUnidade *unid){
-    Campos *auxCampos = unid->Campos;
-    Pdados *auxPdados = auxCampos->Pdados;
-    int counter = 0; // conta as linhas
-    int i; // ira interar ate o valor de counter
-    
-    while(auxCampos!=NULL){
-        printf("%s\t", auxCampos->FieldName);
+void list(dUnidade *unid) {
+    if (unid == NULL || unid->Campos == NULL) {
+        printf("Nenhuma unidade ou campos disponíveis.\n");
     }
-    printf("\n");
-    
-    auxCampos= unid->Campos;
-    while(auxPdados!=NULL){
-        if(auxCampos!=NULL){
-            for(i = 0; i < counter; i++){
-                auxPdados->prox;
-            }
-            if(auxPdados!=NULL){
-                switch(auxCampos->Type){
-                    case 'N': printf("%f\t", auxPdados->dados.F);  break;
-                    case 'D': printf("%s\t", auxPdados->dados.D); break;
-                    case 'L': printf("%d\t", auxPdados->dados.L); break;
-                    case 'C': printf("%s\t", auxPdados->dados.C); break;
-                    case 'M': printf("%s\t", auxPdados->dados.M); break;
-                }
-                auxCampos=auxCampos->prox;
-                counter++;
-            }
+    else {
+        Campos *auxCampos = unid->Campos;
+
+        // Imprime os nomes das colunas (cabeçalho)
+        while (auxCampos != NULL) {
+            printf("%s\t", auxCampos->FieldName);
+            auxCampos = auxCampos->prox;
         }
-        else{
+        printf("\n");
+
+        int temDados = 1; // Flag para indicar se há mais registros para imprimir
+        while (temDados) {
+            temDados = 0; // Assume que não há mais dados a menos que encontre algum
+            
             auxCampos = unid->Campos;
+            while (auxCampos != NULL) {
+                if (auxCampos->Pdados != NULL) {
+                    temDados = 1; // Ainda há dados para imprimir
+
+                    switch (auxCampos->Type) {
+                        case 'N': printf("%f\t", auxCampos->Pdados->Valor.N); break;
+                        case 'D': printf("%s\t", auxCampos->Pdados->Valor.D); break;
+                        case 'L': printf("%d\t", auxCampos->Pdados->Valor.L); break;
+                        case 'C': printf("%s\t", auxCampos->Pdados->Valor.C); break;
+                        case 'M': printf("%s\t", auxCampos->Pdados->Valor.M); break;
+                        default: printf("?\t"); break;
+                    }
+
+                    // Avança para o próximo dado no campo
+                    auxCampos->Pdados = auxCampos->Pdados->prox;
+                }
+                auxCampos = auxCampos->prox;
+            }
+            printf("\n");
         }
     }
-    
 }
