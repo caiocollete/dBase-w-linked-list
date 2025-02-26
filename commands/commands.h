@@ -5,15 +5,15 @@ struct tpcommand{
 typedef struct tpcommand Command;
 
 const char *prefixos[NUM_PREFIXOS] = {
-    "SET DEFAULT TO ", // 0
-    "CREATE ", // 1
-    "DIR", // 2
-    "QUIT", // 3
-    "USE ", // 4
-    "LIST STRUCTURE", // 5
-    "APPEND", // 6
+    "SET DEFAULT TO ", // 0 done
+    "CREATE ", // 1 done
+    "DIR", // 2 done
+    "QUIT", // 3 done
+    "USE ", // 4 done
+    "LIST STRUCTURE", // 5 done
+    "APPEND", // 6 testing
     "LIST FOR NOME = ", // 7
-    "LIST", // 8
+    "LIST", // 8 doing
     "CLEAR", // 9
     "LOCATE FOR NOME = ", // 10
     "GOTO ", // 11

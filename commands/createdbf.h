@@ -1,5 +1,7 @@
 void createdbf(dBase *db, char *namedbf){
+    
     Campos *novoCampo;
+    dUnidade *aux = db->unidade;
     dUnidade *nova = (dUnidade*)malloc(sizeof(dUnidade));
     char FieldName[MAXFIELDNAME], Type;
     int Dec, Width;
@@ -56,6 +58,13 @@ void createdbf(dBase *db, char *namedbf){
             }
             aux->prox=novoCampo;
         }
+        
+        // inserir a new.DBF na db
+        while(aux->prox!=NULL){
+            aux=aux->prox;
+        }
+        aux->prox=nova;
+        
 #ifdef _WIN32
         system("cls");
 #else

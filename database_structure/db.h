@@ -1,7 +1,7 @@
-#define MAXNAME 64
-#define MAXDATA 10
-#define MAXHORA 5
-#define MAXFIELDNAME 64
+#define MAXNAME 256
+#define MAXDATA 16
+#define MAXHORA 8
+#define MAXFIELDNAME 256
 #define MAXBYTES 50
 
 union dados{
@@ -64,9 +64,9 @@ void inicializarBase(dBase **base) {
 
 dUnidade *criarUnidade(const char *nome, const char *data, const char *hora) {
     dUnidade *unidade = (dUnidade *)malloc(sizeof(dUnidade));
-    strcpy(unidade->NomeDBF, nome);
-    strcpy(unidade->Data, data);
-    strcpy(unidade->Hora, hora);
+    strncpy(unidade->NomeDBF, nome, MAXNAME - 1);
+    strncpy(unidade->Data, data, MAXDATA - 1);
+    strncpy(unidade->Hora, hora, MAXHORA - 1);
     unidade->Status = (Status *)malloc(sizeof(Status));
     unidade->Status->Status = 'A'; // Ativo
     unidade->Status->prox = NULL;
@@ -77,7 +77,7 @@ dUnidade *criarUnidade(const char *nome, const char *data, const char *hora) {
 
 Campos *criarCampo(const char *nome, char tipo, int width, int dec) {
     Campos *campo = (Campos *)malloc(sizeof(Campos));
-    strcpy(campo->FieldName, nome);
+    strncpy(campo->FieldName, nome, MAXFIELDNAME - 1);
     campo->Type = tipo;
     campo->Width = width;
     campo->Dec = dec;
