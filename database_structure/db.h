@@ -13,7 +13,7 @@ union dados{
 };
 struct tppdados{
 	union dados Valor;
-	struct tppatual *prox;
+	struct tppdados *prox;
 };
 typedef	struct tppdados Pdados;
 
@@ -46,7 +46,7 @@ typedef struct tpunidade dUnidade;
 
 struct tpdbase{
 	struct tpdbase *ant, *prox;
-	char disco[2]; // "C:"
+	char disco[3]; // "C:"
 	struct tpunidade *unidade;
 };
 typedef struct tpdbase dBase;
