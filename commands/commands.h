@@ -11,9 +11,9 @@ const char *prefixos[NUM_PREFIXOS] = {
     "QUIT", // 3 done
     "USE ", // 4 done
     "LIST STRUCTURE", // 5 done
-    "APPEND", // 6 testing
-    "LIST FOR NOME = ", // 7
-    "LIST", // 8 doing
+    "APPEND", // 6 done
+    "LIST FOR NOME = ", // 7 next
+    "LIST", // 8 done
     "CLEAR", // 9
     "LOCATE FOR NOME = ", // 10
     "GOTO ", // 11
