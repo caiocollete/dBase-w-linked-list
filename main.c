@@ -53,6 +53,8 @@ int main(void){
             case 4: use(dbAtual, &unidadeAtual,command.value); break;
             case 5: liststructure(dbAtual, unidadeAtual); break;
             case 6: append(&unidadeAtual); break;
+            case 7: /* doing */ break;
+            case 8: list(unidadeAtual); break;
             
         }
         

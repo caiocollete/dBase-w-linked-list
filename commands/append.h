@@ -8,22 +8,21 @@ void append(dUnidade **unidade) {
         while (aux != NULL) {
             Pdados *novo = (Pdados *)malloc(sizeof(Pdados));
             if (novo == NULL) {
-                printf("Erro ao alocar memoria!\n");
+                printf("Error about memory!\n");
             }
             else {
                 novo->prox = NULL;
-                int exit = 0; // Vari‡vel para controle de erro
+                int exit = 0; // Variavel para controle de erro
                 
                 printf("%s: ", aux->FieldName);
                 
                 switch (aux->Type) {
                     case 'N':
                         if (scanf("%f", &novo->Valor.N) != 1) {
-                            printf("Erro: Entrada invalida para numero!\n");
+                            printf("Error: Entrada invalida para numero!\n");
                             free(novo);
                             exit = 1;
                         }
-                        while (getchar() != '\n'); // Limpa buffer
                         break;
                     case 'D':
                         printf("(00/00/0000) ");
@@ -32,11 +31,10 @@ void append(dUnidade **unidade) {
                         break;
                     case 'L':
                         if (scanf("%d", &novo->Valor.L) != 1) {
-                            printf("Erro: Entrada invalida para logico!\n");
+                            printf("Error: Entrada invalida para logico!\n");
                             free(novo);
                             exit = 1;
                         }
-                        while (getchar() != '\n'); // Limpa buffer
                         break;
                     case 'C':
                         while (getchar() != '\n'); // Limpa buffer antes de fgets
@@ -57,7 +55,9 @@ void append(dUnidade **unidade) {
                 if (!exit) { // Apenas adiciona se n‹o houver erro
                     if (aux->Pdados == NULL) {
                         aux->Pdados = novo;
-                    } else {
+                        aux->Patual = novo;
+                    } 
+					else {
                         Pdados *auxDados = aux->Pdados;
                         while (auxDados->prox != NULL) {
                             auxDados = auxDados->prox;

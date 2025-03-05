@@ -5,8 +5,15 @@ void use(dBase *atual, dUnidade **unidade, char *target){
 	        char nameDBF[MAXNAME];
 	        strcpy(nameDBF, aux->NomeDBF);
 	        to_upper_str(nameDBF);
-	        while(aux!=NULL && strcmp(nameDBF, target)!=0)
-	            aux = aux->prox;
+	        if(strcmp(nameDBF, target)!=0){
+	        	aux = aux->prox;
+	        	while(aux!=NULL && strcmp(nameDBF, target)!=0){
+	        		strcpy(nameDBF, aux->NomeDBF);
+	        		to_upper_str(nameDBF);
+	        		if(strcmp(nameDBF, target)!=0)
+	        			aux = aux->prox;
+	        	}
+	        }
 	        if(aux!=NULL){
 	            *unidade=aux;
 	            printf("[%s] was setted", target);

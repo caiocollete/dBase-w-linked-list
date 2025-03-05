@@ -44,46 +44,64 @@ void liststructure(dBase *dbAtual, dUnidade *unid){
     printf("** TOTAL **\t\t\t%d", widthsum);
 }
 
-
-
 void list(dUnidade *unid) {
     if (unid == NULL || unid->Campos == NULL) {
-        printf("Nenhuma unidade ou campos disponÃ­veis.\n");
+        printf("Nenhuma unidade ou campos disponíveis.\n");
     }
-    else {
-        Campos *auxCampos = unid->Campos;
-
-        // Imprime os nomes das colunas (cabeÃ§alho)
-        while (auxCampos != NULL) {
-            printf("%s\t", auxCampos->FieldName);
-            auxCampos = auxCampos->prox;
-        }
-        printf("\n");
-
-        int temDados = 1; // Flag para indicar se hÃ¡ mais registros para imprimir
-        while (temDados) {
-            temDados = 0; // Assume que nÃ£o hÃ¡ mais dados a menos que encontre algum
-            
-            auxCampos = unid->Campos;
-            while (auxCampos != NULL) {
-                if (auxCampos->Pdados != NULL) {
-                    temDados = 1; // Ainda hÃ¡ dados para imprimir
-
-                    switch (auxCampos->Type) {
-                        case 'N': printf("%f\t", auxCampos->Pdados->Valor.N); break;
-                        case 'D': printf("%s\t", auxCampos->Pdados->Valor.D); break;
-                        case 'L': printf("%d\t", auxCampos->Pdados->Valor.L); break;
-                        case 'C': printf("%s\t", auxCampos->Pdados->Valor.C); break;
-                        case 'M': printf("%s\t", auxCampos->Pdados->Valor.M); break;
-                        default: printf("?\t"); break;
-                    }
-
-                    // AvanÃ§a para o prÃ³ximo dado no campo
-                    auxCampos->Pdados = auxCampos->Pdados->prox;
-                }
-                auxCampos = auxCampos->prox;
-            }
-            printf("\n");
-        }
+    else{
+    	
+	    Campos *auxCampos = unid->Campos;
+	
+	    // Imprime os nomes das colunas (cabeçalho)
+	    while (auxCampos != NULL) {
+	        printf("%s\t", auxCampos->FieldName);
+	        auxCampos = auxCampos->prox;
+	    }
+	    printf("\n");
+	
+	    // Reinicializa auxCampos para percorrer novamente
+	    auxCampos = unid->Campos;
+	
+	    // Verifica se há dados
+	    if (auxCampos->Pdados == NULL) {
+	        printf("Nenhum dado disponível.\n");
+	    }
+	    else{
+	    	// Percorrer os registros (considerando que cada campo tem sua lista de dados)
+		    int continuar = 1;
+		    while (continuar) {
+		        continuar = 0; // Assume que não há mais registros
+		
+		        Campos *campoAtual = unid->Campos;
+		        while (campoAtual != NULL) {
+		            if (campoAtual->Patual != NULL) {
+		                continuar = 1; // Ainda há registros para imprimir
+		
+		                switch (campoAtual->Type) {
+		                    case 'N': printf("%.2f\t", campoAtual->Patual->Valor.N); break;
+		                    case 'D': printf("%s\t", campoAtual->Patual->Valor.D); break;
+		                    case 'L': printf("%d\t", campoAtual->Patual->Valor.L); break;
+		                    case 'C': printf("%s\t", campoAtual->Patual->Valor.C); break;
+		                    case 'M': printf("%s\t", campoAtual->Patual->Valor.M); break;
+		                    default: printf("?\t"); break;
+		                }
+		
+		                // Avança para o próximo dado na lista do campo
+		                campoAtual->Patual = campoAtual->Patual->prox;
+		            } else {
+		                printf("\t"); // Preenchendo espaços para colunas vazias
+		            }
+		            campoAtual = campoAtual->prox;
+		        }
+		        printf("\n");
+		    }
+		
+		    // Resetando os ponteiros Patual para o início da lista de cada campo
+		    auxCampos = unid->Campos;
+		    while (auxCampos != NULL) {
+		        auxCampos->Patual = auxCampos->Pdados;
+		        auxCampos = auxCampos->prox;
+		    }	
+	    }
     }
 }
