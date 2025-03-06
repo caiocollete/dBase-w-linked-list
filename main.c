@@ -8,6 +8,8 @@
 
 #include "./database_structure/db.h"
 
+#include "./database_structure/fila.h"
+
 #include "./commands/commands.h"
 #include "./commands/settodefault.h"
 #include "./commands/createdbf.h"
@@ -53,7 +55,7 @@ int main(void){
             case 4: use(dbAtual, &unidadeAtual,command.value); break;
             case 5: liststructure(dbAtual, unidadeAtual); break;
             case 6: append(&unidadeAtual); break;
-            case 7: /* doing */ break;
+            case 7: listforname(command.value, unidadeAtual); break;
             case 8: list(unidadeAtual); break;
             
         }

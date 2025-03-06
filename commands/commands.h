@@ -12,7 +12,7 @@ const char *prefixos[NUM_PREFIXOS] = {
     "USE ", // 4 done
     "LIST STRUCTURE", // 5 done
     "APPEND", // 6 done
-    "LIST FOR NOME = ", // 7 next
+    "LIST FOR ", // 7 doing -- I'm having many problems with this
     "LIST", // 8 done
     "CLEAR", // 9
     "LOCATE FOR NOME = ", // 10
