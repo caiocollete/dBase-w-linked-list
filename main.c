@@ -18,6 +18,8 @@
 #include "./commands/use.h"
 #include "./commands/append.h"
 
+#include "./commands/locate.h"
+#include "./commands/goto.h"
 #include "./commands/pack.h"
 #include "./commands/recall.h"
 #include "./commands/zap.h"
@@ -60,12 +62,12 @@ int main(void){
             case 4: use(dbAtual, &unidadeAtual,command.value); break;
             case 5: liststructure(dbAtual, unidadeAtual); break;
             case 6: append(&unidadeAtual); break;
-            case 7: listforname(command.value, unidadeAtual); break;
+            case 7: listfor(command.value, unidadeAtual); break;
             case 8: list(unidadeAtual); break;
             case 9: clear(); break; // ao dar clear temos que escrever novamente a interface
             
             case 10: 
-            case 11: goto(unidadeAtual, command.value); break
+            case 11: gotoo(unidadeAtual, command.value); break
             case 12:
             case 13:
                 

@@ -123,7 +123,7 @@ void list(dUnidade *unid) {
     }
 }
 
-void listforname(char *parm, dUnidade *unidAt) {
+void listfor(char *parm, dUnidade *unidAt) {
     Campos *campos;
     char filterField[MAXNAME], filter[MAXNAME];
     int i = 0, j = 0;
