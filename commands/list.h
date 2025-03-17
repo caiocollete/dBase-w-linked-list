@@ -18,6 +18,12 @@ void liststructure(dBase *dbAtual, dUnidade *unid){
     printf(". List Structure\n");
     printf("Structure for database: %s%s\n",dbAtual->disco, unid->NomeDBF);
     
+    while (aux != NULL) {
+        aux->Patual = aux->Pdados;
+        aux = aux->prox;
+    }
+    
+    aux = unid->Campos;
     while(aux!=NULL){
         auxp=aux->Pdados;
         while(auxp!=NULL){
@@ -50,13 +56,13 @@ void liststructure(dBase *dbAtual, dUnidade *unid){
 
 void list(dUnidade *unid) {
     if (unid == NULL || unid->Campos == NULL) {
-        printf("Nenhuma unidade ou campos disponíveis.\n");
+        printf("Nenhuma unidade ou campos dispon?veis.\n");
     }
     else{
     	
 	    Campos *auxCampos = unid->Campos;
 	
-	    // Imprime os nomes das colunas (cabeçalho)
+	    // Imprime os nomes das colunas (cabe?alho)
 	    while (auxCampos != NULL) {
 	        printf("%s\t", auxCampos->FieldName);
 	        auxCampos = auxCampos->prox;
@@ -66,20 +72,27 @@ void list(dUnidade *unid) {
 	    // Reinicializa auxCampos para percorrer novamente
 	    auxCampos = unid->Campos;
 	
-	    // Verifica se há dados
+	    // Verifica se ha dados
 	    if (auxCampos->Pdados == NULL) {
-	        printf("Nenhum dado disponível.\n");
+	        printf("Nenhum dado dispon?vel.\n");
 	    }
 	    else{
 	    	// Percorrer os registros (considerando que cada campo tem sua lista de dados)
 		    int continuar = 1;
 		    while (continuar) {
-		        continuar = 0; // Assume que não há mais registros
+		        continuar = 0; // Assume que nao ha mais registros
 		
 		        Campos *campoAtual = unid->Campos;
+                
+                while (campoAtual != NULL) {
+                    campoAtual->Patual = campoAtual->Pdados;
+                    campoAtual = campoAtual->prox;
+                }
+                
+                campoAtual = unid->Campos;
 		        while (campoAtual != NULL) {
 		            if (campoAtual->Patual != NULL) {
-		                continuar = 1; // Ainda há registros para imprimir
+		                continuar = 1; // Ainda ha registros para imprimir
 		
 		                switch (campoAtual->Type) {
 		                    case 'N': printf("%.2f\t", campoAtual->Patual->Valor.N); break;
@@ -90,17 +103,17 @@ void list(dUnidade *unid) {
 		                    default: printf("?\t"); break;
 		                }
 		
-		                // Avança para o próximo dado na lista do campo
+		                // Avan?a para o pr?ximo dado na lista do campo
 		                campoAtual->Patual = campoAtual->Patual->prox;
 		            } else {
-		                printf("\t"); // Preenchendo espaços para colunas vazias
+		                printf("\t"); // Preenchendo espa?os para colunas vazias
 		            }
 		            campoAtual = campoAtual->prox;
 		        }
 		        printf("\n");
 		    }
 		
-		    // Resetando os ponteiros Patual para o início da lista de cada campo
+		    // Resetando os ponteiros Patual para o in?cio da lista de cada campo
 		    auxCampos = unid->Campos;
 		    while (auxCampos != NULL) {
 		        auxCampos->Patual = auxCampos->Pdados;
@@ -121,14 +134,14 @@ void listforname(char *parm, dUnidade *unidAt) {
     }
     
     if (parm[i] == '=') {
-        // Copiar o nome do campo (removendo espaços extras)
+        // Copiar o nome do campo (removendo espacos extras)
         while (j < i && parm[j] == ' ') {
             j++;
         }
         strncpy(filterField, parm + j, i - j);
         filterField[i - j] = '\0';
         
-        // Copiar o valor do filtro (removendo espaços extras)
+        // Copiar o valor do filtro (removendo espacos extras)
         i++;
         while (parm[i] == ' ') {
             i++;
@@ -141,13 +154,20 @@ void listforname(char *parm, dUnidade *unidAt) {
             int aux;
             float value;
             
-            // Imprimir cabeçalhos das colunas
+            // Imprimir cabecalhos das colunas
             Campos *auxCampos = unidAt->Campos;
             while (auxCampos != NULL) {
                 printf("%s\t", auxCampos->FieldName);
                 auxCampos = auxCampos->prox;
             }
             printf("\n");
+            
+            auxCampos = unidAt->Campos;
+            while (auxCampos != NULL) {
+                auxCampos->Patual = auxCampos->Pdados;
+                auxCampos = auxCampos->prox;
+            }
+        
             
             while (campos != NULL) {
                 aux = 0;
@@ -204,7 +224,7 @@ void listforname(char *parm, dUnidade *unidAt) {
                 findField(filterField, &campos);
             }
             
-            // Resetar ponteiro para o início da lista
+            // Resetar ponteiro para o in?cio da lista
             campos = unidAt->Campos;
             while (campos != NULL) {
                 campos->Patual = campos->Pdados;
@@ -219,32 +239,13 @@ void listforname(char *parm, dUnidade *unidAt) {
     }
 }
 
-//char findField(char *field, Campos **campos) {
-//    Campos *auxCampos;
-//    char fieldName[MAXNAME];
-//    
-//    if (*campos != NULL) {
-//        auxCampos = *campos;
-//        while (auxCampos != NULL) {
-//            strcpy(fieldName, auxCampos->FieldName);
-//            to_upper_str(fieldName);
-//            if (strcmp(fieldName, field) == 0) {
-//                *campos = auxCampos;
-//                return 1;
-//            }
-//            auxCampos = auxCampos->prox;
-//        }
-//    }
-//    return 0;
-//}
-
 char findField(char *field, Campos **campos) {
     Campos *auxCampos = *campos;
     char fieldName[MAXNAME];
 
     while (auxCampos != NULL) {
         strcpy(fieldName, auxCampos->FieldName);
-        to_upper_str(fieldName); // Normaliza para maiúsculas
+        to_upper_str(fieldName); // Normaliza para maiusculas
         
         if (strcmp(fieldName, field) == 0) {
             *campos = auxCampos;
@@ -254,6 +255,6 @@ char findField(char *field, Campos **campos) {
         auxCampos = auxCampos->prox;
     }
     
-    return 0; // Campo não encontrado
+    return 0; // Campo nao encontrado
 }
 

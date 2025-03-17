@@ -18,6 +18,11 @@
 #include "./commands/use.h"
 #include "./commands/append.h"
 
+#include "./commands/pack.h"
+#include "./commands/recall.h"
+#include "./commands/zap.h"
+#include "./commands/clear_delete.h"
+
 #ifdef _WIN32
     #include <windows.h>
     #include <conio2.h>
@@ -57,6 +62,20 @@ int main(void){
             case 6: append(&unidadeAtual); break;
             case 7: listforname(command.value, unidadeAtual); break;
             case 8: list(unidadeAtual); break;
+            case 9: clear(); break; // ao dar clear temos que escrever novamente a interface
+            
+            case 10: 
+            case 11: goto(unidadeAtual, command.value); break
+            case 12:
+            case 13:
+                
+            case 14: delete_all(unidadeAtual); break;
+            case 15: deletee(unidadeAtual); break;
+            case 16: recall_all(unidadeAtual); break;
+            case 17: break; // faltando
+            case 18: pack(unidadeAtual); break;
+            case 19: zap(unidadeAtual); break;
+            case 20: recall(unidadeAtual); break;
             
         }
         

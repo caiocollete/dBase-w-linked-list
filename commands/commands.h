@@ -14,17 +14,18 @@ const char *prefixos[NUM_PREFIXOS] = {
     "APPEND", // 6 done
     "LIST FOR ", // 7 doing -- I'm having many problems with this
     "LIST", // 8 done
-    "CLEAR", // 9
+    "CLEAR", // 9 -- need to finish
     "LOCATE FOR NOME = ", // 10
-    "GOTO ", // 11
+    "GOTO ", // 11 done
     "DISPLAY", //12
     "EDIT", //13
-    "DELETE ALL", // 14
-    "DELETE", // 15
-    "RECALL", // 16
+    "DELETE ALL", // 14 done
+    "DELETE", // 15 done
+    "RECALL ALL", // 16 done
     "SET DELETED ", // 17
-    "PACK", // 18
-    "ZAP" // 19
+    "PACK", // 18 done
+    "ZAP", // 19 done
+    "RECALL" // 20 done
 };
 
 

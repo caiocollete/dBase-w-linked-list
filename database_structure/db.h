@@ -122,7 +122,7 @@ void dataseeder(dBase **base) {
     adicionarUnidade(*base, unidade1);
 
     dUnidade *unidade2 = criarUnidade("Pedidos.DBF", "10/02/2025", "15:00");
-    adicionarCampo(unidade2, criarCampo("ID Pedido", 'N', 5, 0));
+    adicionarCampo(unidade2, criarCampo("ID_Pedido", 'N', 5, 0));
     adicionarCampo(unidade2, criarCampo("Valor", 'N', 10, 2));
     adicionarUnidade(*base, unidade2);
 
