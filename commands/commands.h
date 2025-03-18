@@ -14,8 +14,8 @@ const char *prefixos[NUM_PREFIXOS] = {
     "APPEND", // 6 done
     "LIST FOR ", // 7 doing
     "LIST", // 8 done
-    "CLEAR", // 9 -- need to finish - need do interface first
-    "LOCATE FOR ", // 10
+    "CLEAR", // 9 ----------------- need to finish - need do interface first
+    "LOCATE FOR ", // 10 done
     "GOTO ", // 11 done
     "DISPLAY", //12
     "EDIT", //13

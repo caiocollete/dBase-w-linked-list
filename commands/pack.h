@@ -1,34 +1,52 @@
-#include <stdio.h>  
-#include <stdlib.h>
-
 void pack(dUnidade *unidade) {
-    if (unidade == NULL || unidade->Campos == NULL) {
-        printf("Nenhuma unidade esta em uso ou sem registros.\n");
+    if (unidade == NULL || unidade->Campos == NULL || unidade->Status == NULL) {
+        printf("Nenhuma unidade esta em uso, sem registros ou sem status.\n");
         return;
     }
+
     printf("\nExecutando PACK na unidade '%s'\n", unidade->NomeDBF);
     Campos *campo = unidade->Campos;
+    int registrosRemovidos = 0;
+
     while (campo != NULL) {
         Pdados *atual = campo->Pdados;
         Pdados *anterior = NULL;
+        Status *statusAtual = unidade->Status;
+        Status *statusAnterior = NULL;
 
-        while (atual != NULL) {
-            if (atual->Status != NULL && atual->Status->Status == 'D') {  // apenas registros com status 'D'
+        while (atual != NULL && statusAtual != NULL) {
+            if (statusAtual->Status == 'D') {  // Verifica se o registro esta marcado para remocao
                 if (anterior == NULL) {
                     campo->Pdados = atual->prox;
-                } else {
+                } 
+				else {
                     anterior->prox = atual->prox;
                 }
+                if (statusAnterior == NULL) {
+                    unidade->Status = statusAtual->prox;
+                } 
+				else {
+                    statusAnterior->prox = statusAtual->prox;
+                }
+                
                 Pdados *temp = atual;
+                Status *tempStatus = statusAtual;
                 atual = atual->prox;
-                free(temp); //free 
-            } else {
+                statusAtual = statusAtual->prox;
+
+                free(temp);  // Libera o registro
+                free(tempStatus);  // Libera o status associado
+                registrosRemovidos++;
+            } 
+			else {
                 anterior = atual;
+                statusAnterior = statusAtual;
                 atual = atual->prox;
+                statusAtual = statusAtual->prox;
             }
         }
         campo = campo->prox;
     }
 
-    printf("Registros marcados como 'D' foram removidos fisicamente!\n");
+    printf("Foram removidos %d registros deletados.\n", registrosRemovidos);
 }

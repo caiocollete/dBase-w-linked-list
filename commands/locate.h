@@ -3,7 +3,7 @@
 void locate(char *parm, dUnidade *unidAt) {
     Campos *campos;
     char filterField[MAXNAME], filter[MAXNAME];
-    int i = 0, j = 0, count=0;
+    int i = 0, j = 0, count = 0;
     
     // Encontrar o '=' na string
     while (parm[i] != '=' && parm[i] != '\0') {
@@ -11,87 +11,95 @@ void locate(char *parm, dUnidade *unidAt) {
     }
     
     if (parm[i] == '=') {
-        // Copiar o nome do campo (removendo espacos extras)
+        // Copiar o nome do campo (removendo espaços extras)
         while (j < i && parm[j] == ' ') {
             j++;
         }
         strncpy(filterField, parm + j, i - j);
         filterField[i - j] = '\0';
         
-        // Copiar o valor do filtro (removendo espacos extras)
+        // Copiar o valor do filtro (removendo espaços extras)
         i++;
         while (parm[i] == ' ') {
             i++;
         }
         strcpy(filter, parm + i);
         
+        // Localizar o campo filtrado
         campos = unidAt->Campos;
-        
         if (findField(filterField, &campos)) {
-            int aux;
             float value;
-                      
-			// posicionando patual no inicio  
-            auxCampos = unidAt->Campos;
+            
+            // Resetar ponteiros para o início da lista de cada campo
+            Campos *auxCampos = unidAt->Campos;
             while (auxCampos != NULL) {
                 auxCampos->Patual = auxCampos->Pdados;
                 auxCampos = auxCampos->prox;
             }
             
-            while (campos != NULL) {
-                aux = 0;
+            // Percorrer todos os registros
+            int encontrou = 0;
+            while (campos->Patual != NULL) {
+                int aux = 0;
                 char fieldAux[MAXNAME];
-                if (campos->Patual != NULL) {
-                    switch (campos->Type) {
-                        case 'N':
-                            value = atof(filter);
-                            aux = (campos->Patual->Valor.N == value);
-                            break;
-                        case 'D':
-                        	strcpy(fieldAux,campos->Patual->Valor.D);
-                        	to_upper_str(fieldAux);
-                            aux = (strcmp(fieldAux, filter) == 0);
-                            break;
-                        case 'L':
-                            aux = (campos->Patual->Valor.L == atoi(filter));
-                            break;
-                        case 'C':
-                        	strcpy(fieldAux,campos->Patual->Valor.C);
-                        	to_upper_str(fieldAux);
-                            aux = (strcmp(fieldAux, filter) == 0);
-                            break;
-                        case 'M':
-                        	strcpy(fieldAux,campos->Patual->Valor.M);
-                        	to_upper_str(fieldAux);
-                            aux = (strcmp(fieldAux, filter) == 0);
-                            break;
-                    }
+                
+                switch (campos->Type) {
+                    case 'N':
+                        value = atof(filter);
+                        aux = (campos->Patual->Valor.N == value);
+                        break;
+                    case 'D':
+                        strcpy(fieldAux, campos->Patual->Valor.D);
+                        to_upper_str(fieldAux);
+                        aux = (strcmp(fieldAux, filter) == 0);
+                        break;
+                    case 'L':
+                        aux = (campos->Patual->Valor.L == atoi(filter));
+                        break;
+                    case 'C':
+                        strcpy(fieldAux, campos->Patual->Valor.C);
+                        to_upper_str(fieldAux);
+                        aux = (strcmp(fieldAux, filter) == 0);
+                        break;
+                    case 'M':
+                        strcpy(fieldAux, campos->Patual->Valor.M);
+                        to_upper_str(fieldAux);
+                        aux = (strcmp(fieldAux, filter) == 0);
+                        break;
                 }
                 
                 if (aux) {
                     count++;
+                    encontrou = 1;
                 }
                 
-                if (campos->Patual != NULL) {
-                    campos->Patual = campos->Patual->prox;
+                // Avançar para o próximo registro
+                Campos *campoAvancar = unidAt->Campos;
+                while (campoAvancar != NULL) {
+                    if (campoAvancar->Patual != NULL) {
+                        campoAvancar->Patual = campoAvancar->Patual->prox;
+                    }
+                    campoAvancar = campoAvancar->prox;
                 }
-                campos = campos->prox;
-                findField(filterField, &campos);
             }
             
-            printf("Record - %d", count);
-            
-            // Resetar ponteiros para o inicio da lista
-            campos = unidAt->Campos;
-            while (campos != NULL) {
-                campos->Patual = campos->Pdados;
-                campos = campos->prox;
+            if (!encontrou) {
+                printf("Nenhum registro encontrado.\n");
+            } else {
+                printf("Total de registros encontrados: %d\n", count);
             }
-        } 
-		else {
+            
+            // Resetar ponteiros para o início da lista
+            auxCampos = unidAt->Campos;
+            while (auxCampos != NULL) {
+                auxCampos->Patual = auxCampos->Pdados;
+                auxCampos = auxCampos->prox;
+            }
+        } else {
             printf("Field not found\n");
         }
     } else {
         printf("Has missing parameters\n");
     }
 }
+

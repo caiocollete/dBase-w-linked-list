@@ -66,10 +66,10 @@ int main(void){
             case 8: list(unidadeAtual); break;
             case 9: clear(); break; // ao dar clear temos que escrever novamente a interface
             
-            case 10: 
-            case 11: gotoo(unidadeAtual, command.value); break
-            case 12:
-            case 13:
+            case 10: locate(command.value, unidadeAtual); break;
+            case 11: gotoo(unidadeAtual, command.value); break;
+            case 12: break;
+            case 13: break;
                 
             case 14: delete_all(unidadeAtual); break;
             case 15: deletee(unidadeAtual); break;
