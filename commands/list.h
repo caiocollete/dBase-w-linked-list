@@ -2,7 +2,7 @@ char findField(char *field, Campos **campos);
 
 void liststructure(dBase *dbAtual, dUnidade *unid);
 void list(dUnidade *unid);
-void listforname(char *parm, dUnidade *unidAt);
+void listfor(char *parm, dUnidade *unidAt);
 
 void liststructure(dBase *dbAtual, dUnidade *unid){
     int dataRecords=0, widthsum=0;
