@@ -95,22 +95,3 @@ void locate(char *parm, dUnidade *unidAt) {
         printf("Has missing parameters\n");
     }
 }
-
-char findField(char *field, Campos **campos) {
-    Campos *auxCampos = *campos;
-    char fieldName[MAXNAME];
-
-    while (auxCampos != NULL) {
-        strcpy(fieldName, auxCampos->FieldName);
-        to_upper_str(fieldName); // Normaliza para maiusculas
-        
-        if (strcmp(fieldName, field) == 0) {
-            *campos = auxCampos;
-            return 1; // Campo encontrado
-        }
-        
-        auxCampos = auxCampos->prox;
-    }
-    
-    return 0; // Campo nao encontrado
-}
