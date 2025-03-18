@@ -1,8 +1,8 @@
 char findField(char *field, Campos **campos);
 
 void liststructure(dBase *dbAtual, dUnidade *unid);
-void list(dUnidade *unid);
-void listfor(char *parm, dUnidade *unidAt);
+void list(dUnidade *unid, char viewDelete);
+void listfor(char *parm, dUnidade *unidAt, char viewDelete);
 
 void liststructure(dBase *dbAtual, dUnidade *unid){
     int dataRecords=0, widthsum=0;
@@ -54,7 +54,7 @@ void liststructure(dBase *dbAtual, dUnidade *unid){
     printf("** TOTAL **\t\t\t%d", widthsum);
 }
 
-void list(dUnidade *unid) {
+void list(dUnidade *unid, char viewDelete) {
     if (unid == NULL || unid->Campos == NULL) {
         printf("Nenhuma unidade ou campos disponíveis.\n");
     } else {
@@ -120,7 +120,7 @@ void list(dUnidade *unid) {
     }
 }
 
-void listfor(char *parm, dUnidade *unidAt) {
+void listfor(char *parm, dUnidade *unidAt, char viewDelete) {
     Campos *campos;
     char filterField[MAXNAME], filter[MAXNAME];
     int i = 0, j = 0;

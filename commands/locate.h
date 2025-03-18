@@ -1,6 +1,6 @@
 // locate for <fieldName> = <parameter>
 
-void locate(char *parm, dUnidade *unidAt) {
+void locate(char *parm, dUnidade *unidAt, char viewDelete) {
     Campos *campos;
     char filterField[MAXNAME], filter[MAXNAME];
     int i = 0, j = 0, count = 0;

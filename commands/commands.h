@@ -12,7 +12,7 @@ const char *prefixos[NUM_PREFIXOS] = {
     "USE ", // 4 done
     "LIST STRUCTURE", // 5 done
     "APPEND", // 6 done
-    "LIST FOR ", // 7 doing
+    "LIST FOR ", // 7 done
     "LIST", // 8 done
     "CLEAR", // 9 ----------------- need to finish - need do interface first
     "LOCATE FOR ", // 10 done
@@ -22,7 +22,7 @@ const char *prefixos[NUM_PREFIXOS] = {
     "DELETE ALL", // 14 done
     "DELETE", // 15 done
     "RECALL ALL", // 16 done
-    "SET DELETED ", // 17
+    "SET DELETED ", // 17 doing
     "PACK", // 18 done
     "ZAP", // 19 done
     "RECALL" // 20 done
