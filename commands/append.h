@@ -1,102 +1,112 @@
 void append(dUnidade **unidade) {
     if (*unidade == NULL) {
         printf("Define a DB to use\nYou can define with 'USE name.dbf'\n");
-    }
-    else {
-    	Fila *F;
-    	FilaStatus *FS;
-        Campos *aux = (*unidade)->Campos;
+    } else {
+        Campos *auxCampos = (*unidade)->Campos;
         int exit = 0;
-        
-        initS(&FS);
-        init(&F);
-        
-        while (aux != NULL && !exit) {
-        	Status *statusNovo = (Status *)malloc(sizeof(Status));
-            Pdados *novo = (Pdados *)malloc(sizeof(Pdados));
-            if (novo == NULL || statusNovo == NULL) {
-                printf("Error about memory!\n");
-            }
-            else {
-            	statusNovo->prox = NULL;
-            	statusNovo->Status=1;
-                novo->prox = NULL;
-                
-                printf("%s: ", aux->FieldName);
-                
-                switch (aux->Type) {
-                    case 'N':
-                    	fflush(stdin);
-                        if (scanf("%f", &novo->Valor.N) != 1) {
-                            printf("Error: Entrada invalida para numero!\n");
-                            free(novo);
-                            free(statusNovo);
-                            exit = 1;
-                        }
-                        break;
-                    case 'D':
-                        printf("(00/00/0000) ");
-                        fflush(stdin);
-                        fgets(novo->Valor.D, sizeof(novo->Valor.D), stdin);
-                        novo->Valor.D[strcspn(novo->Valor.D, "\n")] = '\0'; // Remove '\n'
-                        break;
-                    case 'L':
-                        if (scanf("%d", &novo->Valor.L) != 1) {
-                            printf("Error: Entrada invalida para logico!\n");
-                            free(novo);
-                            free(statusNovo);
-                            exit = 1;
-                        }
-                        break;
-                    case 'C':
-                        fflush(stdin);
-                        fgets(novo->Valor.C, sizeof(novo->Valor.C), stdin);
-                        novo->Valor.C[strcspn(novo->Valor.C, "\n")] = '\0'; // Remove '\n'
-                        break;
-                    case 'M':
-                        fflush(stdin);
-                        fgets(novo->Valor.M, sizeof(novo->Valor.M), stdin);
-                        novo->Valor.M[strcspn(novo->Valor.M, "\n")] = '\0'; // Remove '\n'
-                        break;
-                    default:
-                        printf("Tipo desconhecido!\n");
-                        free(novo);
-                        free(statusNovo);
-                        exit = 1;
-                }
-                
-                if(!exit){
-                	enqueue(&F,novo);
-                	enqueue(&FS,statusNovo);
-                }
-            }
-            aux = aux->prox; // Avana para o proximo campo
-        }
-        
-		if (!exit) { // Apenas adiciona se nao houver erro
-			
-			aux = (*unidade)->Campos;
-			while(!isEmpty(F) && !isEmptyS(FS)){
-				if (aux->Pdados == NULL) {
-					dequeueS(&FS, &(*unidade)->Status);
-					dequeue(&F,&aux->Pdados);
-	                aux->Patual = aux->Pdados;
-            	} 
+        Status *novoStatus = NULL;
+        Pdados *dadosTemp[MAXFIELDNAME];
+        int count = 0,i;
+
+        novoStatus = (Status*)malloc(sizeof(Status));
+        if (novoStatus == NULL) {
+            printf("Erro de memoria!\n");
+            exit = 1;
+        } 
+		else {
+            novoStatus->Status = 'A';
+            novoStatus->prox = NULL;
+            
+            while (auxCampos != NULL && !exit) {
+                Pdados *novoDado = (Pdados*)malloc(sizeof(Pdados));
+                if (novoDado == NULL) {
+                    printf("Erro de memoria!\n");
+                    exit = 1;
+                } 
 				else {
-	                Pdados *auxDados = aux->Pdados;
-	                while (auxDados->prox != NULL) {
-	                    auxDados = auxDados->prox;
-	                }
-	                dequeue(&F, &auxDados->prox);
-	                
-	                Status *auxStatus = (*unidade)->Status;
-	           		while (auxStatus->prox != NULL) {
-	                	auxStatus = auxStatus->prox;
-	                }
-	                dequeueS(&FS, &auxStatus->Status);
-            	}
-            	aux = aux->prox;
-			}
+                    novoDado->prox = NULL;
+                    printf("%s: ", auxCampos->FieldName);
+                    
+                    switch (auxCampos->Type) {
+                        case 'N':
+                            if (scanf("%f", &novoDado->Valor.N) != 1) {
+                                printf("Valor invalido!\n");
+                                free(novoDado);
+                                exit = 1;
+                            }
+                            break;
+                        case 'D':
+                            printf("(DD/MM/YYYY) ");
+                            fflush(stdin);
+                            fgets(novoDado->Valor.D, MAXDATA, stdin);
+                            novoDado->Valor.D[strcspn(novoDado->Valor.D, "\n")] = '\0';
+                            break;
+                        case 'L':
+                            if (scanf("%d", &novoDado->Valor.L) != 1) {
+                                printf("Valor invalido!\n");
+                                free(novoDado);
+                                exit = 1;
+                            }
+                            break;
+                        case 'C':
+                            fflush(stdin);
+                            fgets(novoDado->Valor.C, MAXBYTES, stdin);
+                            novoDado->Valor.C[strcspn(novoDado->Valor.C, "\n")] = '\0';
+                            break;
+                        case 'M':
+                            fflush(stdin);
+                            fgets(novoDado->Valor.M, MAXBYTES, stdin);
+                            novoDado->Valor.M[strcspn(novoDado->Valor.M, "\n")] = '\0';
+                            break;
+                        default:
+                            printf("Tipo desconhecido!\n");
+                            free(novoDado);
+                            exit = 1;
+                    }
+
+                    if (!exit) {
+                        dadosTemp[count++] = novoDado;
+                        auxCampos = auxCampos->prox;
+                    } 
+					else {
+                        free(novoDado);
+                    }
+                }
+            }
+
+            if (!exit) {
+                if ((*unidade)->Status == NULL) {
+                    (*unidade)->Status = novoStatus;
+                } 
+				else {
+                    Status *ultimoStatus = (*unidade)->Status;
+                    while (ultimoStatus->prox != NULL) {
+                        ultimoStatus = ultimoStatus->prox;
+                    }
+                    ultimoStatus->prox = novoStatus;
+                }
+
+                Campos *campoAtual = (*unidade)->Campos;
+                for (i = 0; i < count; i++) {
+                    if (campoAtual->Pdados == NULL) {
+                        campoAtual->Pdados = dadosTemp[i];
+                        campoAtual->Patual = dadosTemp[i];
+                    } else {
+                        Pdados *ultimoDado = campoAtual->Pdados;
+                        while (ultimoDado->prox != NULL) {
+                            ultimoDado = ultimoDado->prox;
+                        }
+                        ultimoDado->prox = dadosTemp[i];
+                    }
+                    campoAtual = campoAtual->prox;
+                }
+            } 
+			else {
+                free(novoStatus);
+                for (i = 0; i < count; i++) {
+                    free(dadosTemp[i]);
+                }
+            }
         }
     }
 }
