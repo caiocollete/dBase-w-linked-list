@@ -57,211 +57,210 @@ void liststructure(dBase *dbAtual, dUnidade *unid){
 void list(dUnidade *unid, char viewDelete) {
     if (unid == NULL || unid->Campos == NULL) {
         printf("Nenhuma unidade ou campos disponíveis.\n");
-    } else {
-        Campos *auxCampos = unid->Campos;
-
-        // Imprime os nomes das colunas (cabeçalho)
-        while (auxCampos != NULL) {
-            printf("%s\t", auxCampos->FieldName);
-            auxCampos = auxCampos->prox;
-        }
-        printf("\n");
-
-        // Reinicializa auxCampos para percorrer novamente
-        auxCampos = unid->Campos;
-
-        // Verifica se há dados
-        if (auxCampos->Pdados == NULL) {
-            printf("Nenhum dado disponível.\n");
-        } else {
-            // Inicializar ponteiros para o início dos dados de cada campo
-            Campos *campoAtual = unid->Campos;
-            while (campoAtual != NULL) {
-                campoAtual->Patual = campoAtual->Pdados;
-                campoAtual = campoAtual->prox;
-            }
-
-            // Percorre e imprime os registros
-            int continuar = 1;
-            while (continuar) {
-                continuar = 0; // Assume que não há mais registros
-
-                campoAtual = unid->Campos;
-                while (campoAtual != NULL) {
-                    if (campoAtual->Patual != NULL) {
-                        continuar = 1; // Ainda há registros para imprimir
-
-                        switch (campoAtual->Type) {
-                            case 'N': printf("%.2f\t", campoAtual->Patual->Valor.N); break;
-                            case 'D': printf("%s\t", campoAtual->Patual->Valor.D); break;
-                            case 'L': printf("%d\t", campoAtual->Patual->Valor.L); break;
-                            case 'C': printf("%s\t", campoAtual->Patual->Valor.C); break;
-                            case 'M': printf("%s\t", campoAtual->Patual->Valor.M); break;
-                            default: printf("?\t"); break;
-                        }
-
-                        // Avança para o próximo dado na lista do campo
-                        campoAtual->Patual = campoAtual->Patual->prox;
-                    } else {
-                        printf("\t"); // Preenchendo espaços para colunas vazias
-                    }
-                    campoAtual = campoAtual->prox;
-                }
-                printf("\n");
-            }
-
-            // Resetando os ponteiros Patual para o início da lista de cada campo
-            auxCampos = unid->Campos;
-            while (auxCampos != NULL) {
-                auxCampos->Patual = auxCampos->Pdados;
-                auxCampos = auxCampos->prox;
-            }
-        }
+    }
+    else{	
+	    Campos *auxCampos = unid->Campos;
+	
+	    // Imprime os nomes das colunas (cabeçalho)
+	    while (auxCampos != NULL) {
+	        printf("%s\t", auxCampos->FieldName);
+	        auxCampos = auxCampos->prox;
+	    }
+	    printf("\n");
+	
+	    // Verifica se há dados
+	    if (unid->Status == NULL) {
+	        printf("Nenhum dado disponível.\n");
+	    }
+	    else{
+		    // Inicializa os ponteiros atuais de cada campo para o início dos dados
+		    Campos *campo = unid->Campos;
+		    while (campo != NULL) {
+		        campo->Patual = campo->Pdados;
+		        campo = campo->prox;
+		    }
+		
+		    Status *statusAtual = unid->Status;
+		
+		    // Percorre cada registro (cada entrada na lista de Status)
+		    while (statusAtual != NULL) {
+		        // Decide se o registro deve ser exibido
+		        if (viewDelete || statusAtual->Status == 'A') {
+		            Campos *campoAtual = unid->Campos;
+		            // Percorre todos os campos para imprimir os valores do registro atual
+		            while (campoAtual != NULL) {
+		                if (campoAtual->Patual != NULL) {
+		                    switch (campoAtual->Type) {
+		                        case 'N': printf("%.2f\t", campoAtual->Patual->Valor.N); break;
+		                        case 'D': printf("%s\t", campoAtual->Patual->Valor.D); break;
+		                        case 'L': printf("%d\t", campoAtual->Patual->Valor.L); break;
+		                        case 'C': printf("%s\t", campoAtual->Patual->Valor.C); break;
+		                        case 'M': printf("%s\t", campoAtual->Patual->Valor.M); break;
+		                        default: printf("?\t"); break;
+		                    }
+		                    campoAtual->Patual = campoAtual->Patual->prox;
+		                } else {
+		                    printf("\t"); // Campo sem dado
+		                }
+		                campoAtual = campoAtual->prox;
+		            }
+		            printf("\n");
+		        } else {
+		            // Registro excluído, avança os ponteiros dos campos sem imprimir
+		            Campos *campoAtual = unid->Campos;
+		            while (campoAtual != NULL) {
+		                if (campoAtual->Patual != NULL) {
+		                    campoAtual->Patual = campoAtual->Patual->prox;
+		                }
+		                campoAtual = campoAtual->prox;
+		            }
+		        }
+		        statusAtual = statusAtual->prox;
+		    }
+		
+		    // Resetar os ponteiros Patual para o início dos dados em cada campo
+		    campo = unid->Campos;
+		    while (campo != NULL) {
+		        campo->Patual = campo->Pdados;
+		        campo = campo->prox;
+		    }	
+		}
     }
 }
 
 void listfor(char *parm, dUnidade *unidAt, char viewDelete) {
     Campos *campos;
+    Status *statusAtual;
     char filterField[MAXNAME], filter[MAXNAME];
     int i = 0, j = 0;
     
-    // Encontrar o '=' na string
-    while (parm[i] != '=' && parm[i] != '\0') {
-        i++;
-    }
+    // Parse do parâmetro
+    while (parm[i] != '=' && parm[i] != '\0') i++;
     
     if (parm[i] == '=') {
-        // Copiar o nome do campo (removendo espaços extras)
-        while (j < i && parm[j] == ' ') {
-            j++;
-        }
+        // Extrair nome do campo
+        while (j < i && parm[j] == ' ') j++;
         strncpy(filterField, parm + j, i - j);
         filterField[i - j] = '\0';
         
-        // Copiar o valor do filtro (removendo espaços extras)
+        // Extrair valor do filtro
         i++;
-        while (parm[i] == ' ') {
-            i++;
-        }
+        while (parm[i] == ' ') i++;
         strcpy(filter, parm + i);
-        
-        campos = unidAt->Campos;
-        
-        if (findField(filterField, &campos)) {
-            float value;
-            
-            // Imprimir cabeçalhos das colunas
+
+        Campos *campoFiltro = unidAt->Campos;
+        if (findField(filterField, &campoFiltro)) {
+            // Imprimir cabeçalhos
             Campos *auxCampos = unidAt->Campos;
-            while (auxCampos != NULL) {
+            while (auxCampos) {
                 printf("%s\t", auxCampos->FieldName);
                 auxCampos = auxCampos->prox;
             }
             printf("\n");
 
-            // Resetar ponteiros para o início da lista de cada campo
+            // Inicializar ponteiros
+            statusAtual = unidAt->Status;
             auxCampos = unidAt->Campos;
-            while (auxCampos != NULL) {
+            while (auxCampos) {
                 auxCampos->Patual = auxCampos->Pdados;
                 auxCampos = auxCampos->prox;
             }
 
-            // Percorrer todos os registros
-            int continuar = 1;
-            while (continuar) {
-                continuar = 0;  // Assume que não há mais registros
-                
-                Campos *campoAtual = unidAt->Campos;
-                int encontrado = 0;
+            // Percorrer registros
+            while (statusAtual) {
+                int mostrar = (viewDelete || statusAtual->Status == 'A');
+                int filtroOK = 0;
 
-                // Verifica se algum campo ainda tem registros
-                while (campoAtual != NULL) {
-                    if (campoAtual->Patual != NULL) {
-                        continuar = 1;
-                    }
-                    campoAtual = campoAtual->prox;
-                }
+                // Verificar filtro
+				if (campoFiltro->Patual) {
+				    switch (campoFiltro->Type) {
+				        case 'N':
+				            filtroOK = (campoFiltro->Patual->Valor.N == atof(filter));
+				            break;
+				            
+				        case 'D': {
+				            char valCampo[MAXNAME], valFiltro[MAXNAME];
+				            strcpy(valCampo, campoFiltro->Patual->Valor.D);
+				            strcpy(valFiltro, filter);
+				            to_upper_str(valCampo);
+				            to_upper_str(valFiltro);
+				            filtroOK = (strcmp(valCampo, valFiltro) == 0);
+				            break;
+				        }
+				            
+				        case 'C': {
+				            char valCampo[MAXNAME], valFiltro[MAXNAME];
+				            strcpy(valCampo, campoFiltro->Patual->Valor.C);
+				            strcpy(valFiltro, filter);
+				            to_upper_str(valCampo);
+				            to_upper_str(valFiltro);
+				            filtroOK = (strcmp(valCampo, valFiltro) == 0);
+				            break;
+				        }
+				            
+				        case 'M': {
+				            char valCampo[MAXNAME], valFiltro[MAXNAME];
+				            strcpy(valCampo, campoFiltro->Patual->Valor.M);
+				            strcpy(valFiltro, filter);
+				            to_upper_str(valCampo);
+				            to_upper_str(valFiltro);
+				            filtroOK = (strcmp(valCampo, valFiltro) == 0);
+				            break;
+				        }
+				            
+				        case 'L':
+				            filtroOK = (campoFiltro->Patual->Valor.L == atoi(filter));
+				            break;
+				            
+				        default:
+				            filtroOK = 0;
+				            break;
+				    }
+				}
 
-                // Se não há mais registros, sair do loop
-                if (!continuar) {
-                    break;
-                }
-
-                // Verificar se o registro atual do campo filtrado atende à condição
-                if (campos->Patual != NULL) {
-                    switch (campos->Type) {
-                        case 'N': 
-                            value = atof(filter);
-                            encontrado = (campos->Patual->Valor.N == value);
-                            break;
-                        case 'D': {
-                            char fieldAux[MAXNAME];
-                            strcpy(fieldAux, campos->Patual->Valor.D);
-                            to_upper_str(fieldAux);
-                            encontrado = (strcmp(fieldAux, filter) == 0);
-                            break;
-                        }
-                        case 'L': 
-                            encontrado = (campos->Patual->Valor.L == atoi(filter));
-                            break;
-                        case 'C': {
-                            char fieldAux[MAXNAME];
-                            strcpy(fieldAux, campos->Patual->Valor.C);
-                            to_upper_str(fieldAux);
-                            encontrado = (strcmp(fieldAux, filter) == 0);
-                            break;
-                        }
-                        case 'M': {
-                            char fieldAux[MAXNAME];
-                            strcpy(fieldAux, campos->Patual->Valor.M);
-                            to_upper_str(fieldAux);
-                            encontrado = (strcmp(fieldAux, filter) == 0);
-                            break;
-                        }
-                    }
-                }
-
-                // Se o registro corresponde ao filtro, imprimir todos os campos da linha
-                if (encontrado) {
-                    campoAtual = unidAt->Campos;
-                    while (campoAtual != NULL) {
-                        if (campoAtual->Patual != NULL) {
-                            switch (campoAtual->Type) {
-                                case 'N': printf("%.2f\t", campoAtual->Patual->Valor.N); break;
-                                case 'D': printf("%s\t", campoAtual->Patual->Valor.D); break;
-                                case 'L': printf("%d\t", campoAtual->Patual->Valor.L); break;
-                                case 'C': printf("%s\t", campoAtual->Patual->Valor.C); break;
-                                case 'M': printf("%s\t", campoAtual->Patual->Valor.M); break;
-                                default: printf("?\t"); break;
+                // Imprimir registro se atender aos critérios
+                if (mostrar && filtroOK) {
+                    Campos *campoPrint = unidAt->Campos;
+                    while (campoPrint) {
+                        if (campoPrint->Patual) {
+                            switch (campoPrint->Type) {
+                                case 'N': printf("%.2f\t", campoPrint->Patual->Valor.N); break;
+                                case 'D': printf("%s\t", campoPrint->Patual->Valor.D); break;
+                                case 'L': printf("%d\t", campoPrint->Patual->Valor.L); break;
+                                case 'C': printf("%s\t", campoPrint->Patual->Valor.C); break;
+                                case 'M': printf("%s\t", campoPrint->Patual->Valor.M); break;
+                                default: printf("?\t");
                             }
                         } else {
                             printf("\t");
                         }
-                        campoAtual = campoAtual->prox;
+                        campoPrint = campoPrint->prox;
                     }
                     printf("\n");
                 }
 
-                // Avançar para o próximo registro em cada campo
-                campoAtual = unidAt->Campos;
-                while (campoAtual != NULL) {
-                    if (campoAtual->Patual != NULL) {
-                        campoAtual->Patual = campoAtual->Patual->prox;
+                // Avançar para próximo registro
+                Campos *campoAvanco = unidAt->Campos;
+                while (campoAvanco) {
+                    if (campoAvanco->Patual) {
+                        campoAvanco->Patual = campoAvanco->Patual->prox;
                     }
-                    campoAtual = campoAtual->prox;
+                    campoAvanco = campoAvanco->prox;
                 }
+                statusAtual = statusAtual->prox;
             }
 
-            // Resetar ponteiros para o início da lista de cada campo
+            // Resetar ponteiros
             auxCampos = unidAt->Campos;
-            while (auxCampos != NULL) {
+            while (auxCampos) {
                 auxCampos->Patual = auxCampos->Pdados;
                 auxCampos = auxCampos->prox;
             }
         } else {
-            printf("Field not found\n");
+            printf("Campo '%s' não encontrado!\n", filterField);
         }
     } else {
-        printf("Has missing parameters\n");
+        printf("Formato inválido! Use: CAMPO=VALOR\n");
     }
 }
 

@@ -12,10 +12,10 @@ const char *prefixos[NUM_PREFIXOS] = {
     "USE ", // 4 done
     "LIST STRUCTURE", // 5 done
     "APPEND", // 6 done
-    "LIST FOR ", // 7 done -- need to give supp to viewDelete
-    "LIST", // 8 done -- need to give supp to viewDelete
-    "CLEAR", // 9 ----------------- need to finish - need do interface first
-    "LOCATE FOR ", // 10 done -- need to give supp to viewDelete
+    "LIST FOR ", // 7 done
+    "LIST", // 8 done
+    "CLEAR", // 9 done
+    "LOCATE FOR ", // 10 done
     "GOTO ", // 11 done
     "DISPLAY", //12
     "EDIT", //13

@@ -1,105 +1,100 @@
-// locate for <fieldName> = <parameter>
-
 void locate(char *parm, dUnidade *unidAt, char viewDelete) {
-    Campos *campos;
+    Campos *campoFiltro;
+    Status *statusAtual;
     char filterField[MAXNAME], filter[MAXNAME];
     int i = 0, j = 0, count = 0;
     
-    // Encontrar o '=' na string
-    while (parm[i] != '=' && parm[i] != '\0') {
-        i++;
-    }
+    // Parse do parâmetro
+    while (parm[i] != '=' && parm[i] != '\0') i++;
     
     if (parm[i] == '=') {
-        // Copiar o nome do campo (removendo espaços extras)
-        while (j < i && parm[j] == ' ') {
-            j++;
-        }
+        // Extrair nome do campo
+        while (j < i && parm[j] == ' ') j++;
         strncpy(filterField, parm + j, i - j);
         filterField[i - j] = '\0';
         
-        // Copiar o valor do filtro (removendo espaços extras)
+        // Extrair valor do filtro
         i++;
-        while (parm[i] == ' ') {
-            i++;
-        }
+        while (parm[i] == ' ') i++;
         strcpy(filter, parm + i);
-        
-        // Localizar o campo filtrado
-        campos = unidAt->Campos;
-        if (findField(filterField, &campos)) {
-            float value;
-            
-            // Resetar ponteiros para o início da lista de cada campo
+
+        // Localizar campo
+        campoFiltro = unidAt->Campos;
+        if (findField(filterField, &campoFiltro)) {
+            // Inicializar ponteiros
+            statusAtual = unidAt->Status;
             Campos *auxCampos = unidAt->Campos;
-            while (auxCampos != NULL) {
+            while (auxCampos) {
                 auxCampos->Patual = auxCampos->Pdados;
                 auxCampos = auxCampos->prox;
             }
-            
-            // Percorrer todos os registros
-            int encontrou = 0;
-            while (campos->Patual != NULL) {
-                int aux = 0;
-                char fieldAux[MAXNAME];
-                
-                switch (campos->Type) {
-                    case 'N':
-                        value = atof(filter);
-                        aux = (campos->Patual->Valor.N == value);
-                        break;
-                    case 'D':
-                        strcpy(fieldAux, campos->Patual->Valor.D);
-                        to_upper_str(fieldAux);
-                        aux = (strcmp(fieldAux, filter) == 0);
-                        break;
-                    case 'L':
-                        aux = (campos->Patual->Valor.L == atoi(filter));
-                        break;
-                    case 'C':
-                        strcpy(fieldAux, campos->Patual->Valor.C);
-                        to_upper_str(fieldAux);
-                        aux = (strcmp(fieldAux, filter) == 0);
-                        break;
-                    case 'M':
-                        strcpy(fieldAux, campos->Patual->Valor.M);
-                        to_upper_str(fieldAux);
-                        aux = (strcmp(fieldAux, filter) == 0);
-                        break;
+
+            // Percorrer registros
+            while (statusAtual) {
+                int filtroOK = 0;
+                int mostrar = (viewDelete || statusAtual->Status == 'A');
+
+                // Verificar filtro
+                if (campoFiltro->Patual) {
+                    switch (campoFiltro->Type) {
+                        case 'N':
+                            filtroOK = (campoFiltro->Patual->Valor.N == atof(filter));
+                            break;
+                        case 'D': case 'C': case 'M': {
+                            char valCampo[MAXNAME], valFiltro[MAXNAME];
+                            strcpy(valCampo, campoFiltro->Type == 'D' ? 
+                                campoFiltro->Patual->Valor.D :
+                                campoFiltro->Type == 'C' ? 
+                                campoFiltro->Patual->Valor.C : 
+                                campoFiltro->Patual->Valor.M);
+                            strcpy(valFiltro, filter);
+                            to_upper_str(valCampo);
+                            to_upper_str(valFiltro);
+                            filtroOK = (strcmp(valCampo, valFiltro) == 0);
+                            break;
+                        }
+                        case 'L':
+                            filtroOK = (campoFiltro->Patual->Valor.L == atoi(filter));
+                            break;
+                    }
                 }
-                
-                if (aux) {
+
+                // Contar se atender ambos critérios
+                if (filtroOK && mostrar) {
                     count++;
-                    encontrou = 1;
                 }
-                
-                // Avançar para o próximo registro
+
+                // Avançar registros
                 Campos *campoAvancar = unidAt->Campos;
-                while (campoAvancar != NULL) {
-                    if (campoAvancar->Patual != NULL) {
+                while (campoAvancar) {
+                    if (campoAvancar->Patual) {
                         campoAvancar->Patual = campoAvancar->Patual->prox;
                     }
                     campoAvancar = campoAvancar->prox;
                 }
+                statusAtual = statusAtual->prox;
             }
-            
-            if (!encontrou) {
-                printf("Nenhum registro encontrado.\n");
-            } else {
-                printf("Total de registros encontrados: %d\n", count);
+
+            // Exibir resultado
+            if (count > 0) {
+                printf("Registros encontrados: %d\n", count);
+            } 
+			else {
+                printf("Nenhum registro corresponde ao criterio\n");
             }
-            
-            // Resetar ponteiros para o início da lista
+
+            // Resetar ponteiros
             auxCampos = unidAt->Campos;
-            while (auxCampos != NULL) {
+            while (auxCampos) {
                 auxCampos->Patual = auxCampos->Pdados;
                 auxCampos = auxCampos->prox;
             }
-        } else {
-            printf("Field not found\n");
+        } 
+		else {
+            printf("Campo '%s' nao encontrado!\n", filterField);
         }
-    } else {
-        printf("Has missing parameters\n");
+    } 
+	else {
+        printf("Formato invalido! Use: CAMPO=VALOR\n");
     }
 }
-
