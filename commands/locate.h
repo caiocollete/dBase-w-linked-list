@@ -2,6 +2,7 @@
 
 void locate(char *parm, dUnidade *unidAt, char viewDelete) {
     Campos *campos;
+    Status *statusAtual;
     char filterField[MAXNAME], filter[MAXNAME];
     int i = 0, j = 0, count = 0;
     
@@ -25,6 +26,7 @@ void locate(char *parm, dUnidade *unidAt, char viewDelete) {
         }
         strcpy(filter, parm + i);
         
+        statusAtual = unidAt->Status;
         // Localizar o campo filtrado
         campos = unidAt->Campos;
         if (findField(filterField, &campos)) {
@@ -68,7 +70,7 @@ void locate(char *parm, dUnidade *unidAt, char viewDelete) {
                         break;
                 }
                 
-                if (aux) {
+                if (aux && (viewDelete || statusAtual->Status=='A')) {
                     count++;
                     encontrou = 1;
                 }
@@ -81,6 +83,7 @@ void locate(char *parm, dUnidade *unidAt, char viewDelete) {
                     }
                     campoAvancar = campoAvancar->prox;
                 }
+                statusAtual=statusAtual->prox;
             }
             
             if (!encontrou) {
