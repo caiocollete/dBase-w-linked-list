@@ -3,14 +3,16 @@
 void clear() { //9
     #ifdef _WIN32
         system("cls");  // windows
+        commandline();
     #else
         system("clear"); // macOS do caiocollete
+        commandline();
     #endif
 }
 
 void deletee(dUnidade *unidade) {
     if (unidade == NULL) {
-        printf("Nenhuma unidade está em uso.\n");
+        printf("Nenhuma unidade estao em uso.\n");
     }
     else{
         if (unidade->Status == NULL) {

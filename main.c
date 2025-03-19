@@ -25,6 +25,7 @@
 #include "./commands/setdelete.h"
 #include "./commands/zap.h"
 #include "./commands/clear_delete.h"
+#include "./commands/visualDbase.h"
 
 #ifdef _WIN32
     #include <windows.h>
@@ -36,6 +37,7 @@
 
 int main(void){
 
+	char dire[100] ="?"; // exibir o DIRETORIO 	 NA INTERFACE
     dBase *dbase = NULL, *dbAtual=NULL;
     dUnidade *unidadeAtual=NULL;
     int viewDelete=0;
@@ -45,33 +47,44 @@ int main(void){
     to_upper_str(ent);
     
     dataseeder(&dbase);
-	
+    //Aqui começas a exibição da tela "introdução"
+	tela1();
+	clear();
 	while(strcmp("QUIT", ent)!=0){
-		printf("[db@localhost] $ ");
-        
-        fflush(stdin);
+		//clear();
+		commandline(dire);  
+		fflush(stdin);
         fgets(ent, sizeof(ent), stdin);
         ent[strcspn(ent, "\n")] = 0;
         to_upper_str(ent);
         
 		command=processarComando(ent);
+		
+		gotoxy(58,18);
+		//remover esse printf quando acabar as telas toda.
         printf("[%d] %s\n", command.type, command.value);
         
         switch(command.type){
-            case 0: setDefault(&dbase, command.value, &dbAtual, &unidadeAtual); break;
-            case 1: createdbf(dbAtual, command.value); break;
+            case 0: setDefault(&dbase, command.value, &dbAtual, &unidadeAtual);
+            strcpy(dire, command.value);
+        	strncpy(dire, command.value, sizeof(dire) - 1);
+    		dire[sizeof(dire) - 1] = '\0';
+        	commandline(dire);
+			break; //interface concluida
+            case 1: commandCreate(dire, command.value,command.type);
+					createdbf(dbAtual, command.value); break;
             case 2: dir(dbAtual); break;
-            case 3: /*QUIT*/ break;
+            case 3: /*QUIT*/ break; //interface concluida
             case 4: use(dbAtual, &unidadeAtual,command.value); break;
             case 5: liststructure(dbAtual, unidadeAtual); break;
             case 6: append(&unidadeAtual); break;
             case 7: listfor(command.value, unidadeAtual, viewDelete); break;
             case 8: list(unidadeAtual, viewDelete); break;
-            case 9: clear(); break; // ao dar clear temos que escrever novamente a interface
+            case 9: clear(); break; // interface concluida
             
             case 10: locate(command.value, unidadeAtual, viewDelete); break;
             case 11: gotoo(unidadeAtual, command.value); break;
-            case 12: break;
+            case 12: break; 
             case 13: break;
                 
             case 14: delete_all(unidadeAtual); break;
@@ -81,17 +94,11 @@ int main(void){
             case 18: pack(unidadeAtual); break;
             case 19: zap(unidadeAtual); break;
             case 20: recall(unidadeAtual); break;
-            default: break;
+            default: commandinvalido(dire);break; //interface concluida
         }
         
         
-#ifdef _WIN32
-		getch();
-        system("cls");
-#else
-		sleep(3);
-        system("clear");
-#endif
+
 	}
 	
 	return 0;
