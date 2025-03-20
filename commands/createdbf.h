@@ -13,12 +13,18 @@ void createdbf(dBase *db, char *namedbf){
 #endif*/
     strcpy(nova->NomeDBF, namedbf);
     gotoxy(1,3);
-    printf("Data (00/00/0000): ");
+    printf("Date (00/00/0000): ");
+    limparmsg();
+	gotoxy(39,24);
+	printf("Enter the date");
     gotoxy(20,3);
 	fflush(stdin);
     fgets(nova->Data, sizeof(MAXDATA), stdin);
     gotoxy(1,4);
-    printf("Hora (00:00): ");
+    printf("Time (00:00): ");
+    limparmsg();
+	gotoxy(39,24);
+	printf("Enter the time");
     gotoxy(15,4);
     fflush(stdin);
     fgets(nova->Hora, sizeof(MAXHORA), stdin);
@@ -28,21 +34,34 @@ void createdbf(dBase *db, char *namedbf){
 #else
         system("clear");
 #endif*/
-
+	limparmsg();
+	gotoxy(32,24);
+	printf("Enter the fieldname");
     gotoxy(1,5);
     printf("FieldName: ");
     fflush(stdin);
     fgets(FieldName, sizeof(FieldName), stdin);
     
     while(strcmp(FieldName, "EXIT\n")!=0){
-
+		limparmsg();
+		gotoxy(2,24);
+        printf("N-NUMERIC / D-DATE / L-LOGICAL / C-CHARACTER(MAX.50BYTES) / M-MEMO(50 BYTES)");
     	gotoxy(1,6);
         printf("Type: ");
         fflush(stdin);
         scanf("%c", &Type);
+        
+        limparmsg();
+		gotoxy(38,24);
+		printf("Enter the width");
+		
         gotoxy(1,7);
         printf("Width: ");
         scanf("%d", &Width);
+        
+        limparmsg();
+		gotoxy(39,24);
+		printf("Enter the desc");
         gotoxy(1,8);
         printf("Desc: ");
         scanf("%d", &Dec);
@@ -80,10 +99,14 @@ void createdbf(dBase *db, char *namedbf){
             nova->prox=NULL;
         }	
         
-        gotoxy(1,5);
+        limparmsg();
+		gotoxy(20,24);
+		printf("Enter the FieldName or type EXIT to stop");
+		gotoxy(1,5);
 	    printf("FieldName: ");
 	    fflush(stdin);
 	    fgets(FieldName, sizeof(FieldName), stdin);
+	   
 	
     }
     ClearTela();

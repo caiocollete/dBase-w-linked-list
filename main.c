@@ -64,23 +64,27 @@ int main(void){
 		//remover esse printf quando acabar as telas toda.
         printf("[%d] %s\n", command.type, command.value);
         
+        
+        /*Interface: Bem vindo, setdefault, create, dir, clear*/
         switch(command.type){
             case 0: setDefault(&dbase, command.value, &dbAtual, &unidadeAtual);
             strcpy(dire, command.value);
         	strncpy(dire, command.value, sizeof(dire) - 1);
     		dire[sizeof(dire) - 1] = '\0';
         	commandline(dire);
-			break; //interface concluida
-            case 1: commandCreate(dire, command.value,command.type);
+			break; 
+            case 1: commandCreate(dire, command.value);
 					createdbf(dbAtual, command.value); break;
-            case 2: dir(dbAtual); break;
-            case 3: /*QUIT*/ break; //interface concluida
+            case 2: commandDir(dire);
+					dir(dbAtual); 
+					clear();break;
+            case 3: /*QUIT*/ break; 
             case 4: use(dbAtual, &unidadeAtual,command.value); break;
             case 5: liststructure(dbAtual, unidadeAtual); break;
             case 6: append(&unidadeAtual); break;
             case 7: listfor(command.value, unidadeAtual, viewDelete); break;
             case 8: list(unidadeAtual, viewDelete); break;
-            case 9: clear(); break; // interface concluida
+            case 9: clear(); break; 
             
             case 10: locate(command.value, unidadeAtual, viewDelete); break;
             case 11: gotoo(unidadeAtual, command.value); break;

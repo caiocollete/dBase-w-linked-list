@@ -88,7 +88,7 @@ void commandline(char *diretorio){
 	textbackground(7);
 	limparcommandline();
 	gotoxy(1,22);
-	printf("Command Line     ||<%s>||                  ||                  ||     ||Num   ",diretorio);//  /t nao printa branco wtf
+	printf("Command Line     ||<%s>||                  ||                  ||     ||Num    ",diretorio);//  /t nao printa branco wtf
 	textcolor(7);
 	textbackground(0);
 	limparmsg();
@@ -102,7 +102,7 @@ void commandinvalido(char *diretorio){
 	textcolor(0);
 	textbackground(7);
 	gotoxy(1,22);
-	printf("INVALID COMMAND    ||<%s>||                 ||                 ||     ||Num   ",diretorio);//  /t nao printa branco wtf
+	printf("INVALID COMMAND    ||<%s>||                 ||                 ||     ||Num    ",diretorio);//  /t nao printa branco wtf
 	textcolor(7);
 	textbackground(0);
 	limparmsg();
@@ -115,33 +115,45 @@ void commandinvalido(char *diretorio){
         c = getch();  
     } while(c != 32);
 }
-void commandCreate(char *diretorio, char *nomearquivo, int number){
+
+void commandDir(char *dire){
+	textcolor(0);
+	textbackground(7);
+	gotoxy(1,22);
+	printf("Dir               ||<%s>||               ||    Files .DBF    ||     ||Rec: Nome  ",dire);//  /t nao printa branco wtf
+	textcolor(7);
+	textbackground(0);
+	limparmsg();
+	
+}
+void commandCreate(char *diretorio, char *nomearquivo){
 	limparescrita();
 	textcolor(0);
 	textbackground(7);
 	limparcommandline();
 	gotoxy(1,22);
-	printf("Create     ||<%s>||    %s    ||         %d        ||     ||Num   ",diretorio,nomearquivo,number);//  /t nao printa branco wtf
+	printf("Create     ||<%s>||    %s    ||              ||              ||Num   ",diretorio,nomearquivo);//  /t nao printa branco wtf
 	textcolor(7);
 	textbackground(0);
 	limparmsg();
 	gotoxy(25,24);
-	printf("fill in the data to create.");
+	printf("Fill in the data to create.");
 	fflush(stdin);
     gotoxy(1,21);
 }
 void limparmsg(void)
 {	//limpa a msg da ultima linha
     gotoxy(1,24);
-    printf("%77s", "");  // Imprime 79 espaços em branco
+    printf("%79s", "");  // Imprime 79 espaços em branco
 }
 void limparcommandline(void){
 	gotoxy(1,22);
-	printf("%77s", "");
+	printf("%79s", "");
 }
 void limparescrita(void){
 	gotoxy(1,21);
-	printf("%77s", "");
+	printf("%79s", "");
 }
+
 
 #endif
