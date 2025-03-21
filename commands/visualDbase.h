@@ -88,14 +88,9 @@ void commandline(char *diretorio){
 	textbackground(7);
 	limparcommandline();
 	gotoxy(1,22);
-	printf("Command Line     ||<%s>||                  ||                  ||     ||Num    ",diretorio);//  /t nao printa branco wtf
+	printf("Command Line     ||<%s>||                   ||                   ||     ||Num    ",diretorio);//  /t nao printa branco wtf
 	textcolor(7);
 	textbackground(0);
-	limparmsg();
-	gotoxy(25,24);
-	printf("Enter a dBase III Plus command.");
-	fflush(stdin);
-    gotoxy(1,21);
 }
 
 void commandinvalido(char *diretorio){
@@ -126,13 +121,88 @@ void commandDir(char *dire){
 	limparmsg();
 	
 }
+void commandlinePosUse(char *dire,char *nomearq){
+	textcolor(0);
+	textbackground(7);
+	gotoxy(1,22);
+	printf("Command Line            ||<%s>||                 ||    %s    ||     ||Num   ",dire,nomearq);//  /t nao printa branco wtf
+	textcolor(7);
+	textbackground(0);
+	limparmsg();
+	gotoxy(25,24);
+	printf("Enter a dBase III Plus command.");
+	fflush(stdin);
+    gotoxy(1,21);
+	
+}
+void commandlineZap(char *diretorio, char *nomearq){
+	limparescrita();
+	textcolor(0);
+	textbackground(7);
+	limparcommandline();
+	gotoxy(1,22);
+	printf("Zap        ||<%s>||                   ||        %s       ||     ||Num    ",diretorio,nomearq);//  /t nao printa branco wtf
+	textcolor(7);
+	textbackground(0);
+}
+void commandlinePack(char *diretorio, char *nomearq){
+	limparescrita();
+	textcolor(0);
+	textbackground(7);
+	limparcommandline();
+	gotoxy(1,22);
+	printf("Pack        ||<%s>||                  ||        %s       ||     ||Num    ",diretorio,nomearq);//  /t nao printa branco wtf
+	textcolor(7);
+	textbackground(0);
+}
+void commandlineSetDeleteOn(char *diretorio, char *nomearq){
+	limparescrita();
+	textcolor(0);
+	textbackground(7);
+	limparcommandline();
+	gotoxy(1,22);
+	printf("Set delete ON     ||<%s>||            ||     %s      ||     ||Num    ",diretorio,nomearq);//  /t nao printa branco wtf
+	textcolor(7);
+	textbackground(0);
+}
+void commandlineSetDeleteOff(char *diretorio, char *nomearq){
+	limparescrita();
+	textcolor(0);
+	textbackground(7);
+	limparcommandline();
+	gotoxy(1,22);
+	printf("Set delete OFF    ||<%s>||            ||     %s      ||     ||Num    ",diretorio,nomearq);//  /t nao printa branco wtf
+	textcolor(7);
+	textbackground(0);
+}
+void commandlineRecall(char *diretorio, char *nomearq){
+	limparescrita();
+	textcolor(0);
+	textbackground(7);
+	limparcommandline();
+	gotoxy(1,22);
+	printf("Recall         ||<%s>||              ||     %s      ||     ||Num    ",diretorio,nomearq);//  /t nao printa branco wtf
+	textcolor(7);
+	textbackground(0);
+}
+
+void commandlineRecallAll(char *diretorio, char *nomearq){
+	limparescrita();
+	textcolor(0);
+	textbackground(7);
+	limparcommandline();
+	gotoxy(1,22);
+	printf("Recall All     ||<%s>||              ||     %s      ||     ||Num    ",diretorio,nomearq);//  /t nao printa branco wtf
+	textcolor(7);
+	textbackground(0);
+}
 void commandCreate(char *diretorio, char *nomearquivo){
 	limparescrita();
 	textcolor(0);
 	textbackground(7);
 	limparcommandline();
 	gotoxy(1,22);
-	printf("Create     ||<%s>||    %s    ||              ||              ||Num   ",diretorio,nomearquivo);//  /t nao printa branco wtf
+	printf("Create    ||<%s>||   %s   ||                      ||               ||Num   ",diretorio,nomearquivo);//  /t nao printa branco wtf
 	textcolor(7);
 	textbackground(0);
 	limparmsg();

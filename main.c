@@ -4,7 +4,7 @@
 #include <ctype.h>
 
 #define MAXCOMMAND 128
-#define NUM_PREFIXOS 20
+#define NUM_PREFIXOS 21
 
 #include "./database_structure/db.h"
 
@@ -37,10 +37,11 @@
 
 int main(void){
 
-	char dire[100] ="?"; // exibir o DIRETORIO 	 NA INTERFACE
+	char dire[3] ="?", auxdire[4] = "?",c; // exibir o DIRETORIO 	 NA INTERFACE
+	char nome[25] = "          ";
     dBase *dbase = NULL, *dbAtual=NULL;
     dUnidade *unidadeAtual=NULL;
-    int viewDelete=0;
+    int viewDelete=0, confirmeUse;
 	Command command;
 	char ent[MAXCOMMAND];
     ent[strcspn(ent, "\n")] = 0;
@@ -52,7 +53,7 @@ int main(void){
 	clear();
 	while(strcmp("QUIT", ent)!=0){
 		//clear();
-		commandline(dire);  
+		commandlinePosUse(dire, nome); 
 		fflush(stdin);
         fgets(ent, sizeof(ent), stdin);
         ent[strcspn(ent, "\n")] = 0;
@@ -60,12 +61,34 @@ int main(void){
         
 		command=processarComando(ent);
 		
-		gotoxy(58,18);
+		gotoxy(50,18);
 		//remover esse printf quando acabar as telas toda.
         printf("[%d] %s\n", command.type, command.value);
         
         
-        /*Interface: Bem vindo, setdefault, create, dir, clear*/
+        /*Interface: Bem vindo      DONE
+		 "SET DEFAULT TO ",         DONE
+	    "CREATE ",                  DONE
+	    "DIR",                 		DONE
+	    "QUIT",                 	DONE
+	    "USE ",                 	DONE
+	    "LIST STRUCTURE", 			XXXX
+	    "APPEND", 					XXXX
+	    "LIST FOR ", 				XXXX
+	    "LIST", 					XXXX
+	    "CLEAR",                    DONE
+	    "LOCATE FOR ",				XXXX
+	    "GOTO ",					XXXX
+	    "DISPLAY", 					XXXX
+	    "EDIT", 					XXXX
+	    "DELETE ALL",				XXXX
+	    "DELETE", 					XXXX
+	    "RECALL ALL", 				DONE
+	    "SET DELETED ", 			DONE
+	    "PACK", 					DONE
+	    "ZAP",               	   	DONE
+	    "RECALL" 					DONE
+		*/
         switch(command.type){
             case 0: setDefault(&dbase, command.value, &dbAtual, &unidadeAtual);
             strcpy(dire, command.value);
@@ -79,7 +102,16 @@ int main(void){
 					dir(dbAtual); 
 					clear();break;
             case 3: /*QUIT*/ break; 
-            case 4: use(dbAtual, &unidadeAtual,command.value); break;
+            case 4: strcpy(nome,command.value);
+            		strcpy(auxdire, dire);
+    				commandlinePosUse(dire, nome); 
+					confirmeUse = use(dbAtual, &unidadeAtual,command.value); 
+					if(confirmeUse == 0){
+						strcpy(nome,"         ");
+	    				commandlinePosUse(dire, nome); 
+					}
+					limparescrita();
+					break;
             case 5: liststructure(dbAtual, unidadeAtual); break;
             case 6: append(&unidadeAtual); break;
             case 7: listfor(command.value, unidadeAtual, viewDelete); break;
@@ -93,12 +125,34 @@ int main(void){
                 
             case 14: delete_all(unidadeAtual); break;
             case 15: deletee(unidadeAtual); break;
-            case 16: recall_all(unidadeAtual); break;
-            case 17: setdelete(&viewDelete, command.value); break; 
-            case 18: pack(unidadeAtual); break;
-            case 19: zap(unidadeAtual); break;
-            case 20: recall(unidadeAtual); break;
-            default: commandinvalido(dire);break; //interface concluida
+            case 16:commandlineRecallAll(dire,nome); 
+					recall_all(unidadeAtual); break;
+            case 17: setdelete(&viewDelete, command.value); 
+            		if(viewDelete){
+            			limparmsg();
+						gotoxy(26,24);
+						printf("  viewDelete On, Press [BACKSPACE]");
+						commandlineSetDeleteOn(dire,nome);
+				    	do {
+					    	gotoxy(1,21);
+					        c = getch();  
+				    	}while(c != 32);
+            		}else{
+            			limparmsg();
+						gotoxy(27,24);
+						printf("  viewDelete Off, Press [BACKSPACE]");
+						commandlineSetDeleteOff(dire,nome);
+				    	do {
+					    	gotoxy(1,21);
+					        c = getch();  
+				    	}while(c != 32);
+            		}
+			break; 
+            case 18: commandlinePack(dire,nome);pack(unidadeAtual); break;
+            case 19: commandlineZap(dire,nome);zap(unidadeAtual); break;
+            case 20: commandlineRecall(dire,nome); 
+					 recall(unidadeAtual); break;
+            default: commandinvalido(dire);break; 
         }
         
         

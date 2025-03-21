@@ -1,9 +1,15 @@
 void pack(dUnidade *unidade) {
+	char c;
     if (unidade == NULL || unidade->Campos == NULL || unidade->Status == NULL) {
-        printf("Nenhuma unidade esta em uso, sem registros ou sem status.\n");
+    	limparmsg();
+		gotoxy(25,24);
+		printf("Db isn't defined, Press [BACKSPACE]");
+    	do {
+    	gotoxy(1,21);
+        c = getch();  
+    	}while(c != 32);
     }
     else{
-        printf("\nExecutando PACK na unidade '%s'\n", unidade->NomeDBF);
         Campos *campo = unidade->Campos;
         int registrosRemovidos = 0;
 
@@ -46,7 +52,12 @@ void pack(dUnidade *unidade) {
             }
             campo = campo->prox;
         }
-
-        printf("Foram removidos %d registros deletados.\n", registrosRemovidos);
+        limparmsg();
+		gotoxy(7,24);
+		printf("All deleted records were removed!, Press [BACKSPACE]");
+    	do {
+    	gotoxy(1,21);
+        c = getch();  
+    	}while(c != 32);
     }
 }

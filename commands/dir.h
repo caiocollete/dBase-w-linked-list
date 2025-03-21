@@ -9,6 +9,7 @@ int calcularTamanho(dUnidade *unidade) {
 }
 
 void dir(dBase *db){
+	char c;
 	limparescrita();
 	int total=0;
 	int x = 3, z = 0;
@@ -51,7 +52,6 @@ void dir(dBase *db){
 	        limparmsg();
 			gotoxy(28,24);
 			printf("  To close, Press [BACKSPACE]");
-			char c;
 	    	do {
 	    	gotoxy(1,21);
 	        c = getch();  
@@ -61,7 +61,6 @@ void dir(dBase *db){
 	    	limparmsg();
 			gotoxy(25,24);
 			printf("UNIT is NULL, Press [BACKSPACE]");
-			char c;
 	    	do {
 	    	gotoxy(1,21);
 	        c = getch();  
@@ -73,7 +72,6 @@ void dir(dBase *db){
 		limparmsg();
 		gotoxy(25,24);
 		printf("Db isn't defined, Press [BACKSPACE]");
-		char c;
     	do {
     	gotoxy(1,21);
         c = getch();  
