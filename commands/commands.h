@@ -17,8 +17,8 @@ const char *prefixos[NUM_PREFIXOS] = {
     "CLEAR", // 9 done
     "LOCATE FOR ", // 10 done
     "GOTO ", // 11 done
-    "DISPLAY", //12
-    "EDIT", //13
+    "DISPLAY", //12 done
+    "EDIT", //13 done
     "DELETE ALL", // 14 done
     "DELETE", // 15 done
     "RECALL ALL", // 16 done

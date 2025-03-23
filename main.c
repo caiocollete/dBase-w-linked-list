@@ -26,6 +26,8 @@
 #include "./commands/zap.h"
 #include "./commands/clear_delete.h"
 #include "./commands/visualDbase.h"
+#include "./commands/display.h"
+#include "./commands/edit.h"
 
 #ifdef _WIN32
     #include <windows.h>
@@ -121,12 +123,10 @@ int main(void){
             case 7: listfor(command.value, unidadeAtual, viewDelete); break;
             case 8: list(unidadeAtual, viewDelete); limparescrita();break;
             case 9: clear(); break; 
-            
             case 10: locate(command.value, unidadeAtual, viewDelete); break;
             case 11: gotoo(unidadeAtual, command.value); break;
-            case 12: break; 
-            case 13: break;
-                
+            case 12: display(unidadeAtual); break; 
+            case 13: edit(unidadeAtual); break;
             case 14: commandlineDeleteAll(dire,nome);delete_all(unidadeAtual); break;
             case 15: commandlineDelete(dire,nome);deletee(unidadeAtual); break;
             case 16:commandlineRecallAll(dire,nome); 
