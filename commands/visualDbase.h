@@ -211,6 +211,37 @@ void commandCreate(char *diretorio, char *nomearquivo){
 	fflush(stdin);
     gotoxy(1,21);
 }
+void commandlineDelete(char *diretorio, char*nomearq){
+	limparescrita();
+	textcolor(0);
+	textbackground(7);
+	limparcommandline();
+	gotoxy(1,22);
+	printf("Delete        ||<%s>||              ||     %s      ||     ||Num    ",diretorio,nomearq);//  /t nao printa branco wtf
+	textcolor(7);
+	textbackground(0);
+	
+}
+void commandlineDeleteAll(char *diretorio, char*nomearq){
+	limparescrita();
+	textcolor(0);
+	textbackground(7);
+	limparcommandline();
+	gotoxy(1,22);
+	printf("Delete All     ||<%s>||              ||     %s      ||     ||Num    ",diretorio,nomearq);//  /t nao printa branco wtf
+	textcolor(7);
+	textbackground(0);
+}
+void commandlineAppend(char *diretorio, char *nomearq){
+	limparescrita();
+	textcolor(0);
+	textbackground(7);
+	limparcommandline();
+	gotoxy(1,22);
+	printf("Append     ||<%s>||              ||     %s      ||     ||Num    ",diretorio,nomearq);//  /t nao printa branco wtf
+	textcolor(7);
+	textbackground(0);
+}
 void limparmsg(void)
 {	//limpa a msg da ultima linha
     gotoxy(1,24);

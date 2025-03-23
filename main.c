@@ -73,22 +73,26 @@ int main(void){
 	    "QUIT",                 	DONE
 	    "USE ",                 	DONE
 	    "LIST STRUCTURE", 			XXXX
-	    "APPEND", 					XXXX
+	    "APPEND", 					DONE
 	    "LIST FOR ", 				XXXX
-	    "LIST", 					XXXX
+	    "LIST", 					EM ANDAMENTO
 	    "CLEAR",                    DONE
 	    "LOCATE FOR ",				XXXX
 	    "GOTO ",					XXXX
 	    "DISPLAY", 					XXXX
 	    "EDIT", 					XXXX
-	    "DELETE ALL",				XXXX
-	    "DELETE", 					XXXX
+	    "DELETE ALL",				DONE
+	    "DELETE", 					DONE
 	    "RECALL ALL", 				DONE
 	    "SET DELETED ", 			DONE
 	    "PACK", 					DONE
 	    "ZAP",               	   	DONE
 	    "RECALL" 					DONE
 		*/
+		
+		
+		//lembrete
+		//arrumar depois todas as linha de comando que nao estao sendo apagada no clear pois passam de 79.
         switch(command.type){
             case 0: setDefault(&dbase, command.value, &dbAtual, &unidadeAtual);
             strcpy(dire, command.value);
@@ -113,9 +117,9 @@ int main(void){
 					limparescrita();
 					break;
             case 5: liststructure(dbAtual, unidadeAtual); break;
-            case 6: append(&unidadeAtual); break;
+            case 6: commandlineAppend(dire,nome);append(&unidadeAtual);clear();break;
             case 7: listfor(command.value, unidadeAtual, viewDelete); break;
-            case 8: list(unidadeAtual, viewDelete); break;
+            case 8: list(unidadeAtual, viewDelete); limparescrita();break;
             case 9: clear(); break; 
             
             case 10: locate(command.value, unidadeAtual, viewDelete); break;
@@ -123,8 +127,8 @@ int main(void){
             case 12: break; 
             case 13: break;
                 
-            case 14: delete_all(unidadeAtual); break;
-            case 15: deletee(unidadeAtual); break;
+            case 14: commandlineDeleteAll(dire,nome);delete_all(unidadeAtual); break;
+            case 15: commandlineDelete(dire,nome);deletee(unidadeAtual); break;
             case 16:commandlineRecallAll(dire,nome); 
 					recall_all(unidadeAtual); break;
             case 17: setdelete(&viewDelete, command.value); 

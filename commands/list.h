@@ -55,22 +55,42 @@ void liststructure(dBase *dbAtual, dUnidade *unid){
 }
 
 void list(dUnidade *unid, char viewDelete) {
+	char c;
     if (unid == NULL || unid->Campos == NULL) {
-        printf("Nenhuma unidade ou campos disponíveis.\n");
+        limparmsg();
+		gotoxy(15,24);
+		printf("Db is not defined or fields, Press [BACKSPACE]");
+    	do {
+	    	gotoxy(1,21);
+	        c = getch();  
+    	}while(c != 32);
     }
     else{	
 	    Campos *auxCampos = unid->Campos;
 	
 	    // Imprime os nomes das colunas (cabeçalho)
+	    gotoxy(1,2);
+	    printf("Record# ");
+	    int v = 15;
 	    while (auxCampos != NULL) {
-	        printf("%s\t", auxCampos->FieldName);
+	    	gotoxy(v,2);
+	        printf("%s", auxCampos->FieldName);
+	        v+=strlen(auxCampos->FieldName);
+	        v+=4;
 	        auxCampos = auxCampos->prox;
+	        
 	    }
 	    printf("\n");
 	
 	    // Verifica se há dados
 	    if (unid->Status == NULL) {
-	        printf("Nenhum dado disponível.\n");
+	        limparmsg();
+			gotoxy(22,24);
+			printf("No data available, Press [BACKSPACE]");
+	    	do {
+		    	gotoxy(1,21);
+		        c = getch();  
+	    	}while(c != 32);
 	    }
 	    else{
 		    // Inicializa os ponteiros atuais de cada campo para o início dos dados
@@ -81,7 +101,8 @@ void list(dUnidade *unid, char viewDelete) {
 		    }
 		
 		    Status *statusAtual = unid->Status;
-		
+		    gotoxy(1,1);
+			printf(" LIST");
 		    // Percorre cada registro (cada entrada na lista de Status)
 		    while (statusAtual != NULL) {
 		        // Decide se o registro deve ser exibido

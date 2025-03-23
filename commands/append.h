@@ -1,6 +1,14 @@
 void append(dUnidade **unidade) {
+	char c;
+	int x=1, y=0;
     if (*unidade == NULL) {
-        printf("Define a DB to use\nYou can define with 'USE name.dbf'\n");
+        limparmsg();
+		gotoxy(6,24);
+	    printf("Define a DB to use | You can define with 'USE name.dbf'\n");
+    	do{
+	    	gotoxy(1,21);
+	        c = getch();  
+    	}while(c != 32);
     } else {
         Campos *auxCampos = (*unidade)->Campos;
         int exit = 0;
@@ -10,7 +18,13 @@ void append(dUnidade **unidade) {
 
         novoStatus = (Status*)malloc(sizeof(Status));
         if (novoStatus == NULL) {
-            printf("Erro de memoria!\n");
+            limparmsg();
+			gotoxy(34,24);
+			printf("Memory error!, Press [BACKSPACE]");
+	    	do {
+		    	gotoxy(1,21);
+		        c = getch();  
+	    	}while(c != 32);
             exit = 1;
         } 
 		else {
@@ -20,30 +34,51 @@ void append(dUnidade **unidade) {
             while (auxCampos != NULL && !exit) {
                 Pdados *novoDado = (Pdados*)malloc(sizeof(Pdados));
                 if (novoDado == NULL) {
-                    printf("Erro de memoria!\n");
+                   	limparmsg();
+					gotoxy(34,24);
+					printf("Memory error!, Press [BACKSPACE]");
+			    	do {
+				    	gotoxy(1,21);
+				        c = getch();  
+			    	}while(c != 32);
                     exit = 1;
                 } 
 				else {
                     novoDado->prox = NULL;
-                    printf("%s: ", auxCampos->FieldName);
-                    
+                    y++;
+                    gotoxy(x,y);
+                    printf("%s: ", auxCampos->FieldName);                    
                     switch (auxCampos->Type) {
                         case 'N':
-                            if (scanf("%f", &novoDado->Valor.N) != 1) {
-                                printf("Valor invalido!\n");
+                            if(scanf("%f", &novoDado->Valor.N) != 1){
+                                limparmsg();
+								gotoxy(32,24);
+								printf("invalid value, Press [BACKSPACE]");
+						    	do {
+							    	gotoxy(1,21);
+							        c = getch();  
+						    	}while(c != 32);
                                 free(novoDado);
                                 exit = 1;
                             }
                             break;
                         case 'D':
+                        	gotoxy(x,y);
                             printf("(DD/MM/YYYY) ");
                             fflush(stdin);
                             fgets(novoDado->Valor.D, MAXDATA, stdin);
                             novoDado->Valor.D[strcspn(novoDado->Valor.D, "\n")] = '\0';
                             break;
                         case 'L':
+                        	gotoxy(x,y);
                             if (scanf("%d", &novoDado->Valor.L) != 1) {
-                                printf("Valor invalido!\n");
+                                limparmsg();
+								gotoxy(32,24);
+								printf("invalid value, Press [BACKSPACE]");
+						    	do {
+							    	gotoxy(1,21);
+							        c = getch();  
+						    	}while(c != 32);
                                 free(novoDado);
                                 exit = 1;
                             }
@@ -59,7 +94,13 @@ void append(dUnidade **unidade) {
                             novoDado->Valor.M[strcspn(novoDado->Valor.M, "\n")] = '\0';
                             break;
                         default:
-                            printf("Tipo desconhecido!\n");
+                            limparmsg();
+							gotoxy(34,24);
+							printf("Unknown type!, Press [BACKSPACE]");
+					    	do {
+						    	gotoxy(1,21);
+						        c = getch();  
+					    	}while(c != 32);
                             free(novoDado);
                             exit = 1;
                     }
