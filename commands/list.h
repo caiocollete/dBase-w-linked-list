@@ -8,14 +8,16 @@ void liststructure(dBase *dbAtual, dUnidade *unid){
     int dataRecords=0, widthsum=0;
     Campos *aux = unid->Campos;
     Pdados *auxp;
-    
+  /*  
 #ifdef _WIN32
         system("cls");
 #else
         system("clear");
-#endif
+#endif*/
     
+    gotoxy(1,1);
     printf(". List Structure\n");
+    gotoxy(1,2);
     printf("Structure for database: %s%s\n",dbAtual->disco, unid->NomeDBF);
     
     while (aux != NULL) {
@@ -32,11 +34,16 @@ void liststructure(dBase *dbAtual, dUnidade *unid){
         }
         aux=aux->prox;
     }
+    gotoxy(1,3);
     printf("Number of data records: %d\n", dataRecords);
+    gotoxy(1,4);
     printf("Date of last update: %s\n", unid->Data);
+    gotoxy(1,5);
     printf("Field\tFieldName\tType\tWidth\tDec\n");
     aux=unid->Campos; dataRecords=1;
+    int y = 6;
     while(aux!=NULL){
+    	gotoxy(1,y);
         printf("%d\t%s\t", dataRecords, aux->FieldName);
         switch(aux->Type){
         	case 'N': printf("Numeric\t");  break;
@@ -46,20 +53,22 @@ void liststructure(dBase *dbAtual, dUnidade *unid){
         	case 'M': printf("Memo\t"); break;
         }
         printf("%d\t%d\n", aux->Width, aux->Dec);
-        
+    	y++;
         widthsum+=aux->Width;
         dataRecords++;
         aux=aux->prox;
     }
+    gotoxy(1,y);
     printf("** TOTAL **\t\t\t%d", widthsum);
 }
 
 void list(dUnidade *unid, char viewDelete) {
 	char c;
+	int x,y;
     if (unid == NULL || unid->Campos == NULL) {
         limparmsg();
 		gotoxy(15,24);
-		printf("Db is not defined or fields, Press [BACKSPACE]");
+		printf("Db is not defined or fields, Press [SPACE]");
     	do {
 	    	gotoxy(1,21);
 	        c = getch();  
@@ -68,32 +77,32 @@ void list(dUnidade *unid, char viewDelete) {
     else{	
 	    Campos *auxCampos = unid->Campos;
 	
-	    // Imprime os nomes das colunas (cabeçalho)
+	    // Imprime os nomes das colunas (cabeï¿½alho)
 	    gotoxy(1,2);
 	    printf("Record# ");
 	    int v = 15;
 	    while (auxCampos != NULL) {
 	    	gotoxy(v,2);
 	        printf("%s", auxCampos->FieldName);
-	        v+=strlen(auxCampos->FieldName);
-	        v+=4;
+	        //v+=strlen(auxCampos->FieldName);
+	        v = v + 12;
 	        auxCampos = auxCampos->prox;
 	        
 	    }
 	    printf("\n");
 	
-	    // Verifica se há dados
+	    // Verifica se hï¿½ dados
 	    if (unid->Status == NULL) {
 	        limparmsg();
 			gotoxy(22,24);
-			printf("No data available, Press [BACKSPACE]");
+			printf("No data available, Press [SPACE]");
 	    	do {
 		    	gotoxy(1,21);
 		        c = getch();  
 	    	}while(c != 32);
 	    }
 	    else{
-		    // Inicializa os ponteiros atuais de cada campo para o início dos dados
+		    // Inicializa os ponteiros atuais de cada campo para o inï¿½cio dos dados
 		    Campos *campo = unid->Campos;
 		    while (campo != NULL) {
 		        campo->Patual = campo->Pdados;
@@ -104,13 +113,16 @@ void list(dUnidade *unid, char viewDelete) {
 		    gotoxy(1,1);
 			printf(" LIST");
 		    // Percorre cada registro (cada entrada na lista de Status)
+			y=3;
 		    while (statusAtual != NULL) {
+		    	x=16;
 		        // Decide se o registro deve ser exibido
 		        if (viewDelete || statusAtual->Status == 'A') {
 		            Campos *campoAtual = unid->Campos;
 		            // Percorre todos os campos para imprimir os valores do registro atual
 		            while (campoAtual != NULL) {
 		                if (campoAtual->Patual != NULL) {
+		                	gotoxy(x,y);
 		                    switch (campoAtual->Type) {
 		                        case 'N': printf("%.2f\t", campoAtual->Patual->Valor.N); break;
 		                        case 'D': printf("%s\t", campoAtual->Patual->Valor.D); break;
@@ -123,11 +135,12 @@ void list(dUnidade *unid, char viewDelete) {
 		                } else {
 		                    printf("\t"); // Campo sem dado
 		                }
+		                x = x + 15;
 		                campoAtual = campoAtual->prox;
 		            }
-		            printf("\n");
+		            y++;
 		        } else {
-		            // Registro excluído, avança os ponteiros dos campos sem imprimir
+		            // Registro excluï¿½do, avanï¿½a os ponteiros dos campos sem imprimir
 		            Campos *campoAtual = unid->Campos;
 		            while (campoAtual != NULL) {
 		                if (campoAtual->Patual != NULL) {
@@ -139,7 +152,7 @@ void list(dUnidade *unid, char viewDelete) {
 		        statusAtual = statusAtual->prox;
 		    }
 		
-		    // Resetar os ponteiros Patual para o início dos dados em cada campo
+		    // Resetar os ponteiros Patual para o inï¿½cio dos dados em cada campo
 		    campo = unid->Campos;
 		    while (campo != NULL) {
 		        campo->Patual = campo->Pdados;
@@ -152,10 +165,10 @@ void list(dUnidade *unid, char viewDelete) {
 void listfor(char *parm, dUnidade *unidAt, char viewDelete) {
     Campos *campos;
     Status *statusAtual;
-    char filterField[MAXNAME], filter[MAXNAME];
+    char filterField[MAXNAME], filter[MAXNAME],c;
     int i = 0, j = 0;
-    
-    // Parse do parâmetro
+    int x, y;
+    // Parse do parï¿½metro
     while (parm[i] != '=' && parm[i] != '\0') i++;
     
     if (parm[i] == '=') {
@@ -171,11 +184,16 @@ void listfor(char *parm, dUnidade *unidAt, char viewDelete) {
 
         Campos *campoFiltro = unidAt->Campos;
         if (findField(filterField, &campoFiltro)) {
-            // Imprimir cabeçalhos
+            // Imprimir cabeï¿½alhos
             Campos *auxCampos = unidAt->Campos;
+            x=15;
+            gotoxy(1,2);
+	    	printf("Record# ");
             while (auxCampos) {
+            	gotoxy(1,x);
                 printf("%s\t", auxCampos->FieldName);
                 auxCampos = auxCampos->prox;
+                x = x+12;
             }
             printf("\n");
 
@@ -239,11 +257,13 @@ void listfor(char *parm, dUnidade *unidAt, char viewDelete) {
 				    }
 				}
 
-                // Imprimir registro se atender aos critérios
+                // Imprimir registro se atender aos critï¿½rios
                 if (mostrar && filtroOK) {
                     Campos *campoPrint = unidAt->Campos;
+                    y=3;x=16;
                     while (campoPrint) {
                         if (campoPrint->Patual) {
+                        	gotoxy(x,y);
                             switch (campoPrint->Type) {
                                 case 'N': printf("%.2f\t", campoPrint->Patual->Valor.N); break;
                                 case 'D': printf("%s\t", campoPrint->Patual->Valor.D); break;
@@ -253,14 +273,14 @@ void listfor(char *parm, dUnidade *unidAt, char viewDelete) {
                                 default: printf("?\t");
                             }
                         } else {
-                            printf("\t");
+                            x = x + 15;
                         }
                         campoPrint = campoPrint->prox;
                     }
-                    printf("\n");
+                    y++;
                 }
 
-                // Avançar para próximo registro
+                // Avanï¿½ar para prï¿½ximo registro
                 Campos *campoAvanco = unidAt->Campos;
                 while (campoAvanco) {
                     if (campoAvanco->Patual) {
@@ -278,10 +298,22 @@ void listfor(char *parm, dUnidade *unidAt, char viewDelete) {
                 auxCampos = auxCampos->prox;
             }
         } else {
-            printf("Campo '%s' não encontrado!\n", filterField);
+            limparmsg();
+			gotoxy(12,24);
+		    printf("field  %s not found!, Press [SPACE]",filterField);
+	    	do{
+		    	gotoxy(1,21);
+		        c = getch();  
+	    	}while(c != 32);
         }
     } else {
-        printf("Formato inválido! Use: CAMPO=VALOR\n");
+        limparmsg();
+		gotoxy(10,24);
+	    printf("Invalid format! Use: FIELD=VALUE, Press [SPACE]");
+    	do{
+	    	gotoxy(1,21);
+	        c = getch();  
+    	}while(c != 32);
     }
 }
 

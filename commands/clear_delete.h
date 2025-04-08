@@ -15,7 +15,7 @@ void deletee(dUnidade *unidade) {
     if (unidade == NULL) {
        	limparmsg();
 		gotoxy(25,24);
-		printf("Db isn't defined, Press [BACKSPACE]");
+		printf("Db isn't defined, Press [SPACE]");
     	do {
 	    	gotoxy(1,21);
 	        c = getch();  
@@ -25,7 +25,7 @@ void deletee(dUnidade *unidade) {
         if (unidade->Status == NULL) {
             limparmsg();
 			gotoxy(25,24);
-			printf("Record status not found, Press [BACKSPACE]");
+			printf("Record status not found, Press [SPACE]");
 	    	do {
 		    	gotoxy(1,21);
 		        c = getch();  
@@ -35,7 +35,7 @@ void deletee(dUnidade *unidade) {
             unidade->Status->Status = 'D';// esse 'D' mostre o registro foi deletado logicamente
             limparmsg();
 			gotoxy(6,24);
-			printf("Current drive record marked for deletion, Press [BACKSPACE]");
+			printf("Current drive record marked for deletion, Press [SPACE]");
 	    	do{
 		    	gotoxy(1,21);
 		        c = getch();  
@@ -50,7 +50,7 @@ void delete_all(dUnidade *unidade) {
     if (unidade == NULL) {
         limparmsg();
 		gotoxy(25,24);
-		printf("Db isn't defined, Press [BACKSPACE]");
+		printf("Db isn't defined, Press [SPACE]");
     	do {
 	    	gotoxy(1,21);
 	        c = getch();  
@@ -60,7 +60,7 @@ void delete_all(dUnidade *unidade) {
         if (unidade->Campos == NULL) {
             limparmsg();
 			gotoxy(25,24);
-			printf("Record status not found, Press [BACKSPACE]");
+			printf("Record status not found, Press [SPACE]");
 	    	do {
 		    	gotoxy(1,21);
 		        c = getch();  
@@ -80,7 +80,7 @@ void delete_all(dUnidade *unidade) {
             }
             limparmsg();
 			gotoxy(6,24);
-			printf("All records have been marked for deletion!, Press [BACKSPACE]");
+			printf("All records have been marked for deletion!, Press [SPACE]");
 	    	do{
 		    	gotoxy(1,21);
 		        c = getch();  

@@ -1,10 +1,10 @@
 void locate(char *parm, dUnidade *unidAt, char viewDelete) {
     Campos *campoFiltro;
     Status *statusAtual;
-    char filterField[MAXNAME], filter[MAXNAME];
+    char filterField[MAXNAME], filter[MAXNAME], c;;
     int i = 0, j = 0, count = 0;
     
-    // Parse do parâmetro
+    // Parse do par?metro
     while (parm[i] != '=' && parm[i] != '\0') i++;
     
     if (parm[i] == '=') {
@@ -59,12 +59,12 @@ void locate(char *parm, dUnidade *unidAt, char viewDelete) {
                     }
                 }
 
-                // Contar se atender ambos critérios
+                // Contar se atender ambos crit?rios
                 if (filtroOK && mostrar) {
                     count++;
                 }
 
-                // Avançar registros
+                // Avan?ar registros
                 Campos *campoAvancar = unidAt->Campos;
                 while (campoAvancar) {
                     if (campoAvancar->Patual) {
@@ -77,10 +77,24 @@ void locate(char *parm, dUnidade *unidAt, char viewDelete) {
 
             // Exibir resultado
             if (count > 0) {
-                printf("Registros encontrados: %d\n", count);
+                gotoxy(1,20);
+                printf("Record: %d\n", count);
+                limparmsg();
+				gotoxy(26,24);
+			     printf("These were the records, Press [SPACE]");
+		    	do{
+			    	gotoxy(1,21);
+			        c = getch();  
+		    	}while(c != 32);
             } 
 			else {
-                printf("Nenhum registro corresponde ao criterio\n");
+                limparmsg();
+                gotoxy(10,24);
+                printf("No records match the criteria, Press [SPACE]");
+                do{
+                    gotoxy(1,21);
+                    c = getch();  
+                }while(c != 32);
             }
 
             // Resetar ponteiros
@@ -91,10 +105,22 @@ void locate(char *parm, dUnidade *unidAt, char viewDelete) {
             }
         } 
 		else {
-            printf("Campo '%s' nao encontrado!\n", filterField);
+            limparmsg();
+			gotoxy(12,24);
+		    printf("field  %s not found!, Press [SPACE]",filterField);
+	    	do{
+		    	gotoxy(1,21);
+		        c = getch();  
+	    	}while(c != 32);
         }
     } 
 	else {
-        printf("Formato invalido! Use: CAMPO=VALOR\n");
+        limparmsg();
+		gotoxy(10,24);
+	    printf("Invalid format! Use: FIELD=VALUE, Press [SPACE]");
+    	do{
+	    	gotoxy(1,21);
+	        c = getch();  
+    	}while(c != 32);
     }
 }

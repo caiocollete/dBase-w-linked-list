@@ -20,7 +20,7 @@ void append(dUnidade **unidade) {
         if (novoStatus == NULL) {
             limparmsg();
 			gotoxy(34,24);
-			printf("Memory error!, Press [BACKSPACE]");
+			printf("Memory error!, Press [SPACE]");
 	    	do {
 		    	gotoxy(1,21);
 		        c = getch();  
@@ -36,7 +36,7 @@ void append(dUnidade **unidade) {
                 if (novoDado == NULL) {
                    	limparmsg();
 					gotoxy(34,24);
-					printf("Memory error!, Press [BACKSPACE]");
+					printf("Memory error!, Press [SPACE]");
 			    	do {
 				    	gotoxy(1,21);
 				        c = getch();  
@@ -53,7 +53,7 @@ void append(dUnidade **unidade) {
                             if(scanf("%f", &novoDado->Valor.N) != 1){
                                 limparmsg();
 								gotoxy(32,24);
-								printf("invalid value, Press [BACKSPACE]");
+								printf("invalid value, Press [SPACE]");
 						    	do {
 							    	gotoxy(1,21);
 							        c = getch();  
@@ -74,7 +74,7 @@ void append(dUnidade **unidade) {
                             if (scanf("%d", &novoDado->Valor.L) != 1) {
                                 limparmsg();
 								gotoxy(32,24);
-								printf("invalid value, Press [BACKSPACE]");
+								printf("invalid value, Press [SPACE]");
 						    	do {
 							    	gotoxy(1,21);
 							        c = getch();  
@@ -96,7 +96,7 @@ void append(dUnidade **unidade) {
                         default:
                             limparmsg();
 							gotoxy(34,24);
-							printf("Unknown type!, Press [BACKSPACE]");
+							printf("Unknown type!, Press [SPACE]");
 					    	do {
 						    	gotoxy(1,21);
 						        c = getch();  

@@ -12,10 +12,7 @@ void ClearTela(void)
             printf(" ");
         }
     }
-    /*/for(x=15;x<78;x++){
-     gotoxy(x,23);
-     printf(" ");
-    }/*/
+
 }
 
 
@@ -102,7 +99,7 @@ void commandinvalido(char *diretorio){
 	textbackground(0);
 	limparmsg();
 	gotoxy(22,24);
-	printf("INVALID COMMAND, Press [BACKSPACE]");
+	printf("INVALID COMMAND, Press [SPACE]");
 	limparescrita();
     char c;
     do {
@@ -242,10 +239,44 @@ void commandlineAppend(char *diretorio, char *nomearq){
 	textcolor(7);
 	textbackground(0);
 }
+
+void commandlineEdit(char *diretorio, char *nomearq){
+	limparescrita();
+	textcolor(0);
+	textbackground(7);
+	limparcommandline();
+	gotoxy(1,22);
+	printf("Edit       ||<%s>||              ||     %s      ||     ||Num    ",diretorio,nomearq);//  /t nao printa branco wtf
+	textcolor(7);
+	textbackground(0);
+}
+void commandlineDisplay(char *diretorio, char *nomearq){
+	limparescrita();
+	textcolor(0);
+	textbackground(7);
+	limparcommandline();
+	gotoxy(1,22);
+	printf("Display     ||<%s>||              ||     %s      ||     ||Num    ",diretorio,nomearq);//  /t nao printa branco wtf
+	textcolor(7);
+	textbackground(0);
+}
+
+void commandlineLocate(char *diretorio, char *nomearq){
+	limparescrita();
+	textcolor(0);
+	textbackground(7);
+	limparcommandline();
+	gotoxy(1,22);
+	printf("LOCATE     ||<%s>||              ||     %s      ||     ||Num    ",diretorio,nomearq);//  /t nao printa branco wtf
+	textcolor(7);
+	textbackground(0);
+}
+
+
 void limparmsg(void)
 {	//limpa a msg da ultima linha
     gotoxy(1,24);
-    printf("%79s", "");  // Imprime 79 espaços em branco
+    printf("%79s", "");  // Imprime 79 espaï¿½os em branco
 }
 void limparcommandline(void){
 	gotoxy(1,22);

@@ -7,7 +7,7 @@ void recall(dUnidade *unidade) {
     if (unidade == NULL) {
         limparmsg();
 		gotoxy(25,24);
-		printf("Db isn't defined, Press [BACKSPACE]");
+		printf("Db isn't defined, Press [SPACE]");
     	do {
 	    	gotoxy(1,21);
 	        c = getch();  
@@ -17,7 +17,7 @@ void recall(dUnidade *unidade) {
         if (unidade->Status == NULL) {
             limparmsg();
 			gotoxy(25,24);
-			printf("The unit has no records, Press [BACKSPACE]");
+			printf("The unit has no records, Press [SPACE]");
 	    	do {
 		    	gotoxy(1,21);
 		        c = getch();  
@@ -28,7 +28,7 @@ void recall(dUnidade *unidade) {
                 unidade->Status->Status = 'A'; // o 'A' para indicar q foi ativado o registro que estava 'D'
                 limparmsg();
 				gotoxy(6,24);
-				printf("Current record for drive has been restored, Press [BACKSPACE]");
+				printf("Current record for drive has been restored, Press [SPACE]");
 		    	do {
 			    	gotoxy(1,21);
 			        c = getch();  
@@ -37,7 +37,7 @@ void recall(dUnidade *unidade) {
             else {
                 limparmsg();
 				gotoxy(11,24);
-				printf("Current record marked as not deleted, Press [BACKSPACE]");
+				printf("Current record marked as not deleted, Press [SPACE]");
 		    	do {
 			    	gotoxy(1,21);
 			        c = getch();  
@@ -51,7 +51,7 @@ void recall_all(dUnidade *unidade) {
     if (unidade == NULL) {
         limparmsg();
 		gotoxy(25,24);
-		printf("Db isn't defined, Press [BACKSPACE]");
+		printf("Db isn't defined, Press [SPACE]");
     	do {
 	    	gotoxy(1,21);
 	        c = getch();  
@@ -61,7 +61,7 @@ void recall_all(dUnidade *unidade) {
         if (unidade->Campos == NULL) {
         	limparmsg();
 			gotoxy(25,24);
-			printf("The unit has no records, Press [BACKSPACE]");
+			printf("The unit has no records, Press [SPACE]");
 	    	do {
 		    	gotoxy(1,21);
 		        c = getch();  
@@ -82,7 +82,7 @@ void recall_all(dUnidade *unidade) {
             }
 			limparmsg();
 			gotoxy(21,24);
-			printf("All records have been restored, Press [BACKSPACE]");
+			printf("All records have been restored, Press [SPACE]");
 	    	do {
 		    	gotoxy(1,21);
 		        c = getch();  

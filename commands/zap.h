@@ -6,7 +6,7 @@ void zap(dUnidade *unidade) {
     if (unidade == NULL) {
         limparmsg();
 		gotoxy(25,24);
-		printf("Db isn't defined, Press [BACKSPACE]");
+		printf("Db isn't defined, Press [SPACE]");
     	do {
 	    	gotoxy(1,21);
 	        c = getch();  
@@ -16,7 +16,7 @@ void zap(dUnidade *unidade) {
         if (unidade->Campos == NULL) {
             limparmsg();
 			gotoxy(8,24);
-			printf("The unit is already completely empty, Press [BACKSPACE]");
+			printf("The unit is already completely empty, Press [SPACE]");
 	    	do {
 	    	gotoxy(1,21);
 	        c = getch();  
@@ -42,7 +42,7 @@ void zap(dUnidade *unidade) {
 
             limparmsg();
 			gotoxy(7,24);
-			printf("All records have been physically removed!, Press [BACKSPACE]");
+			printf("All records have been physically removed!, Press [SPACE]");
 	    	do {
 	    	gotoxy(1,21);
 	        c = getch();  

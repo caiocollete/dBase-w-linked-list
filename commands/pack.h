@@ -3,7 +3,7 @@ void pack(dUnidade *unidade) {
     if (unidade == NULL || unidade->Campos == NULL || unidade->Status == NULL) {
     	limparmsg();
 		gotoxy(25,24);
-		printf("Db isn't defined, Press [BACKSPACE]");
+		printf("Db isn't defined, Press [SPACE]");
     	do {
     	gotoxy(1,21);
         c = getch();  
@@ -54,7 +54,7 @@ void pack(dUnidade *unidade) {
         }
         limparmsg();
 		gotoxy(7,24);
-		printf("All deleted records were removed!, Press [BACKSPACE]");
+		printf("All deleted records were removed!, Press [SPACE]");
     	do {
     	gotoxy(1,21);
         c = getch();  

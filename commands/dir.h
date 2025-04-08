@@ -51,7 +51,7 @@ void dir(dBase *db){
 	        printf("    %d bytes in	    %d files.",total,z);
 	        limparmsg();
 			gotoxy(28,24);
-			printf("  To close, Press [BACKSPACE]");
+			printf("  To close, Press [SPACE]");
 	    	do {
 	    	gotoxy(1,21);
 	        c = getch();  
@@ -60,7 +60,7 @@ void dir(dBase *db){
 	    else{
 	    	limparmsg();
 			gotoxy(25,24);
-			printf("UNIT is NULL, Press [BACKSPACE]");
+			printf("UNIT is NULL, Press [SPACE]");
 	    	do {
 	    	gotoxy(1,21);
 	        c = getch();  
@@ -71,7 +71,7 @@ void dir(dBase *db){
 	else{
 		limparmsg();
 		gotoxy(25,24);
-		printf("Db isn't defined, Press [BACKSPACE]");
+		printf("Db isn't defined, Press [SPACE]");
     	do {
     	gotoxy(1,21);
         c = getch();  

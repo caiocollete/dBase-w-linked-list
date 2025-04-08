@@ -3,7 +3,7 @@ void setdelete(int *viewDelete, char *value) {
     if (viewDelete == NULL || value == NULL) {
         limparmsg();
 		gotoxy(28,24);
-		printf("Missing parameters, Press [BACKSPACE]");
+		printf("Missing parameters, Press [SPACE]");
 		do {
     	gotoxy(1,21);
         c = getch();  
@@ -21,7 +21,7 @@ void setdelete(int *viewDelete, char *value) {
 	    else{
 	    	limparmsg();
 			gotoxy(20,24);
-			printf("Type 'ON' or 'OFF', Press [BACKSPACE]");
+			printf("Type 'ON' or 'OFF', Press [SPACE]");
 			do {
 		    	gotoxy(1,21);
 		        c = getch();  

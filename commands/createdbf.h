@@ -88,7 +88,7 @@ void createdbf(dBase *db, char *namedbf){
         }
         
         // inserir a new.DBF na db
-       if (aux == NULL) {  // Se a lista de unidades está vazia
+       if (aux == NULL) {  // Se a lista de unidades estï¿½ vazia
             db->unidade = nova;
         } else {
             while (aux->prox != NULL) {

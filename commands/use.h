@@ -19,7 +19,7 @@ int use(dBase *atual, dUnidade **unidade, char *target){
 	            *unidade=aux;
 	            limparmsg();
 				gotoxy(15,24);
-				printf("[%s] was setted, Press [BACKSPACE]",target);
+				printf("[%s] was setted, Press [SPACE]",target);
 				do {
 				gotoxy(1,21);
 			    c = getch();  
@@ -30,7 +30,7 @@ int use(dBase *atual, dUnidade **unidade, char *target){
 	        	
 		            limparmsg();
 					gotoxy(15,24);
-					printf("[%s] was not found, Press [BACKSPACE]",target);
+					printf("[%s] was not found, Press [SPACE]",target);
 					do {
 					gotoxy(1,21);
 				    c = getch();  
@@ -42,7 +42,7 @@ int use(dBase *atual, dUnidade **unidade, char *target){
         	
     		limparmsg();
 			gotoxy(25,24);
-			printf("UNIT isn't DEFINED, Press [BACKSPACE]");
+			printf("UNIT isn't DEFINED, Press [SPACE]");
 			do {
 			gotoxy(1,21);
 		    c = getch();  
@@ -56,7 +56,7 @@ int use(dBase *atual, dUnidade **unidade, char *target){
     	{
     		limparmsg();
 			gotoxy(25,24);
-			printf("Db isn't defined, Press [BACKSPACE]");
+			printf("Db isn't defined, Press [SPACE]");
 			do {
 			gotoxy(1,21);
 		    c = getch();  
