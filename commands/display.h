@@ -2,6 +2,11 @@ void display(dUnidade *unid){
 	if(unid!=NULL){
 		Campos *aux = unid->Campos;
 		while(aux!=NULL){
+			printf("%s\t", aux->FieldName);
+		}
+		printf("\n");
+		aux = unid->Campos
+		while(aux!=NULL){
 			switch (aux->Type) {
 	            case 'N': printf("%.2f\t", aux->Patual->Valor.N); break;
 	            case 'D': printf("%s\t", aux->Patual->Valor.D); break;
