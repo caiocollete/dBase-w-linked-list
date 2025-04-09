@@ -1,12 +1,13 @@
 void display(dUnidade *unid){
 	if(unid!=NULL){
 		Campos *aux = unid->Campos;
+		gotoxy(1,1);
 		while(aux!=NULL){
 			printf("%s\t", aux->FieldName);
 			aux=aux->prox;
 		}
-		printf("\n");
-		aux = unid->Campos
+		aux = unid->Campos;
+		gotoxy(1,2);
 		while(aux!=NULL){
 			switch (aux->Type) {
 	            case 'N': printf("%.2f\t", aux->Patual->Valor.N); break;
@@ -16,9 +17,10 @@ void display(dUnidade *unid){
 	            case 'M': printf("%s\t", aux->Patual->Valor.M); break;
 	            default: printf("?\t"); break;
 	        }
-	        printf("\n");
 	        aux=aux->prox;
 		}	
 	}
+	getch();
+	clear();
 }
 
