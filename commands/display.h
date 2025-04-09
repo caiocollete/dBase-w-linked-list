@@ -3,6 +3,7 @@ void display(dUnidade *unid){
 		Campos *aux = unid->Campos;
 		while(aux!=NULL){
 			printf("%s\t", aux->FieldName);
+			aux=aux->prox;
 		}
 		printf("\n");
 		aux = unid->Campos
