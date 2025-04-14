@@ -6,38 +6,66 @@ void createdbf(dBase *db, char *namedbf){
     char FieldName[MAXFIELDNAME], Type;
     int Dec, Width;
     strcpy(FieldName, " ");
-#ifdef _WIN32
+/*#ifdef _WIN32
         system("cls");
 #else
         system("clear");
-#endif
+#endif*/
     strcpy(nova->NomeDBF, namedbf);
-    printf("Data (00/00/0000): ");
+    gotoxy(1,3);
+    printf("Date (00/00/0000): ");
+    limparmsg();
+	gotoxy(39,24);
+	printf("Enter the date");
+    gotoxy(20,3);
+	fflush(stdin);
     fgets(nova->Data, sizeof(MAXDATA), stdin);
-    printf("\n");
-    printf("Hora (00:00): ");
+    gotoxy(1,4);
+    printf("Time (00:00): ");
+    limparmsg();
+	gotoxy(39,24);
+	printf("Enter the time");
+    gotoxy(15,4);
+    fflush(stdin);
     fgets(nova->Hora, sizeof(MAXHORA), stdin);
-    printf("\n");
-#ifdef _WIN32
+    nova->Campos=NULL;
+/*#ifdef _WIN32
         system("cls");
 #else
         system("clear");
-#endif
+#endif*/
+	limparmsg();
+	gotoxy(32,24);
+	printf("Enter the fieldname");
+    gotoxy(1,5);
+    printf("FieldName: ");
+    fflush(stdin);
+    fgets(FieldName, sizeof(FieldName), stdin);
     
-    while(strcmp(FieldName, "EXIT")!=0){
-        printf("FieldName: ");
-        fgets(FieldName, sizeof(FieldName), stdin);
-        printf("\n");
+    while(strcmp(FieldName, "EXIT\n")!=0){
+		limparmsg();
+		gotoxy(2,24);
+        printf("N-NUMERIC / D-DATE / L-LOGICAL / C-CHARACTER(MAX.50BYTES) / M-MEMO(50 BYTES)");
+    	gotoxy(1,6);
         printf("Type: ");
-        scanf(" %c", &Type);
-        printf("\n");
+        fflush(stdin);
+        scanf("%c", &Type);
+        
+        limparmsg();
+		gotoxy(38,24);
+		printf("Enter the width");
+		
+        gotoxy(1,7);
         printf("Width: ");
         scanf("%d", &Width);
-        printf("\n");
+        
+        limparmsg();
+		gotoxy(39,24);
+		printf("Enter the desc");
+        gotoxy(1,8);
         printf("Desc: ");
         scanf("%d", &Dec);
-        printf("\n");
-        
+        ClearTela();
         // criar uma struct Campos e inserir os dados nela
         novoCampo=(Campos*)malloc(sizeof(Campos));
         strcpy(novoCampo->FieldName, FieldName);
@@ -52,23 +80,34 @@ void createdbf(dBase *db, char *namedbf){
             nova->Campos = novoCampo;
         }
         else{
-            Campos *aux = nova->Campos;
-            while(aux->prox!=NULL){
-                aux = aux->prox;
+            Campos *camposAux = nova->Campos;
+            while(camposAux->prox!=NULL){
+                camposAux = camposAux->prox;
             }
-            aux->prox=novoCampo;
+            camposAux->prox=novoCampo;
         }
         
         // inserir a new.DBF na db
-        while(aux->prox!=NULL){
-            aux=aux->prox;
-        }
-        aux->prox=nova;
+       if (aux == NULL) {  // Se a lista de unidades est� vazia
+            db->unidade = nova;
+        } else {
+            while (aux->prox != NULL) {
+                aux = aux->prox;
+            }
+            aux->prox = nova;
+            nova->ant = aux;
+            nova->prox=NULL;
+        }	
         
-#ifdef _WIN32
-        system("cls");
-#else
-        system("clear");
-#endif
+        limparmsg();
+		gotoxy(20,24);
+		printf("Enter the FieldName or type EXIT to stop");
+		gotoxy(1,5);
+	    printf("FieldName: ");
+	    fflush(stdin);
+	    fgets(FieldName, sizeof(FieldName), stdin);
+	   
+	
     }
+    ClearTela();
 }

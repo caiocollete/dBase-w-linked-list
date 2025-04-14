@@ -54,9 +54,9 @@ typedef struct tpdbase dBase;
 
 //DATASEEDER
 
-void inicializarBase(dBase **base) {
+void inicializarBase(dBase **base, char *unid) {
     *base = (dBase *)malloc(sizeof(dBase));
-    strcpy((*base)->disco, "C:");
+    strcpy((*base)->disco, unid);
     (*base)->ant = NULL;
     (*base)->prox = NULL;
     (*base)->unidade = NULL;
@@ -113,7 +113,12 @@ void exibirBase(dBase *base) {
 }
 
 void dataseeder(dBase **base) {
-    inicializarBase(base);
+	dBase *aux;
+    inicializarBase(&*base,"C:");
+	inicializarBase(&aux,"D:");
+	
+	(*base)->prox=aux;
+	aux->ant=(*base);
 
     dUnidade *unidade1 = criarUnidade("Clientes.DBF", "10/02/2025", "14:30");
     adicionarCampo(unidade1, criarCampo("Nome", 'C', 50, 0));
@@ -125,6 +130,12 @@ void dataseeder(dBase **base) {
     adicionarCampo(unidade2, criarCampo("ID_Pedido", 'N', 5, 0));
     adicionarCampo(unidade2, criarCampo("Valor", 'N', 10, 2));
     adicionarUnidade(*base, unidade2);
+    
+    dUnidade *unidade3 = criarUnidade("Produtos.DBF", "10/02/2025", "14:30");
+    adicionarCampo(unidade3, criarCampo("Nome", 'C', 50, 0));
+    adicionarCampo(unidade3, criarCampo("Valor", 'N', 3, 0));
+    adicionarCampo(unidade3, criarCampo("Quantidade", 'N', 10, 2));
+    adicionarUnidade(aux, unidade3);
 
     exibirBase(*base);
 }

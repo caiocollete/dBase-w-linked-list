@@ -18,6 +18,7 @@ void setDefault(dBase **dbase, char *disco, dBase **dbAtual, dUnidade **unidade)
         if(strcmp(aux->disco, disco)==0){ // ACHOU O DISCO, OU SEJA, ELE JA ESTA ADICIONADO
             *dbAtual = aux;
             *unidade = aux->unidade;
+            
         }
         else{ // NAO ACHOU O DISCO
             *dbase = novo;

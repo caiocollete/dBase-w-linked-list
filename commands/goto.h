@@ -20,6 +20,6 @@ void gotoo(dUnidade *unidade, char target[MAXCOMMAND]){
             campos=campos->prox;
         }
         
-        printf("\n%d\n");
+        //printf("\n%d\n", i);
     }
 }

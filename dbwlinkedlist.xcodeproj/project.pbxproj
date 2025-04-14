@@ -16,6 +16,15 @@
 		25A962912D64111100088172 /* db.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = db.h; sourceTree = "<group>"; };
 		25B70EA12D66A31C00AE29DA /* list.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
 		25B70EA22D66A85900AE29DA /* append.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = append.h; sourceTree = "<group>"; };
+		25C443A32D8A338600B77268 /* clear_delete.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = clear_delete.h; sourceTree = "<group>"; };
+		25C443A42D8A338600B77268 /* goto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = goto.h; sourceTree = "<group>"; };
+		25C443A52D8A338600B77268 /* locate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = locate.h; sourceTree = "<group>"; };
+		25C443A62D8A338600B77268 /* pack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pack.h; sourceTree = "<group>"; };
+		25C443A72D8A338600B77268 /* recall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = recall.h; sourceTree = "<group>"; };
+		25C443A82D8A338600B77268 /* setdelete.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = setdelete.h; sourceTree = "<group>"; };
+		25C443A92D8A338600B77268 /* zap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = zap.h; sourceTree = "<group>"; };
+		25C443AA2D8A338E00B77268 /* fila.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fila.h; sourceTree = "<group>"; };
+		25C443AB2D8A338E00B77268 /* filaStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = filaStatus.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -31,6 +40,13 @@
 		25A9628F2D6410E200088172 /* commands */ = {
 			isa = PBXGroup;
 			children = (
+				25C443A32D8A338600B77268 /* clear_delete.h */,
+				25C443A42D8A338600B77268 /* goto.h */,
+				25C443A52D8A338600B77268 /* locate.h */,
+				25C443A62D8A338600B77268 /* pack.h */,
+				25C443A72D8A338600B77268 /* recall.h */,
+				25C443A82D8A338600B77268 /* setdelete.h */,
+				25C443A92D8A338600B77268 /* zap.h */,
 				25540BD92D651B7D00664031 /* use.h */,
 				25A962902D64110300088172 /* dir.h */,
 				25A9628C2D6410E200088172 /* commands.h */,
@@ -45,6 +61,8 @@
 		25A962922D64111100088172 /* database_structure */ = {
 			isa = PBXGroup;
 			children = (
+				25C443AA2D8A338E00B77268 /* fila.h */,
+				25C443AB2D8A338E00B77268 /* filaStatus.h */,
 				25A962912D64111100088172 /* db.h */,
 			);
 			path = database_structure;

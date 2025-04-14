@@ -3,46 +3,88 @@
 void clear() { //9
     #ifdef _WIN32
         system("cls");  // windows
+        commandline();
     #else
         system("clear"); // macOS do caiocollete
+        commandline();
     #endif
 }
 
 void deletee(dUnidade *unidade) {
+	char c;
     if (unidade == NULL) {
-        printf("Nenhuma unidade está em uso.\n");
-        return;
+       	limparmsg();
+		gotoxy(25,24);
+		printf("Db isn't defined, Press [SPACE]");
+    	do {
+	    	gotoxy(1,21);
+	        c = getch();  
+    	}while(c != 32);
     }
-    if (unidade->Status == NULL) {
-        printf("Erro: Status do registro não encontrado\n");
-        return;
+    else{
+        if (unidade->Status == NULL) {
+            limparmsg();
+			gotoxy(25,24);
+			printf("Record status not found, Press [SPACE]");
+	    	do {
+		    	gotoxy(1,21);
+		        c = getch();  
+	    	}while(c != 32);
+        }
+        else{
+            unidade->Status->Status = 'D';// esse 'D' mostre o registro foi deletado logicamente
+            limparmsg();
+			gotoxy(6,24);
+			printf("Current drive record marked for deletion, Press [SPACE]");
+	    	do{
+		    	gotoxy(1,21);
+		        c = getch();  
+	    	}while(c != 32);
+    	}
     }
-    unidade->Status->Status = 'D';// esse 'D' mostre o registro foi deletado logicamente
-    printf("Registro atual unidade: '%s' marcado para exclusão\n", unidade->NomeDBF);//alterar escrita
+    
 }
 
 void delete_all(dUnidade *unidade) {
+	char c;
     if (unidade == NULL) {
-        printf("Nenhuma unidade esta em uso\n");
-        return;
+        limparmsg();
+		gotoxy(25,24);
+		printf("Db isn't defined, Press [SPACE]");
+    	do {
+	    	gotoxy(1,21);
+	        c = getch();  
+    	}while(c != 32);
     }
-    if (unidade->Campos == NULL) {
-        printf("A unidade '%s' não possui registros\n", unidade->NomeDBF);
-        return;
-    }
-    //remover esse printf dps 
-    printf("todos os registros da unidade '%s' para exclusão\n\n", unidade->NomeDBF);
-    Campos *campo = unidade->Campos;
-    while (campo != NULL) {
-        Pdados *dado = campo->Pdados;
-        while (dado != NULL) {
-            if (unidade->Status != NULL) {
-                unidade->Status->Status = 'D'; //marcar excluido
-            }
-            dado = dado->prox;
+    else{
+        if (unidade->Campos == NULL) {
+            limparmsg();
+			gotoxy(25,24);
+			printf("Record status not found, Press [SPACE]");
+	    	do {
+		    	gotoxy(1,21);
+		        c = getch();  
+	    	}while(c != 32);
         }
-        campo = campo->prox;
+        else{
+            Campos *campo = unidade->Campos;
+            while (campo != NULL) {
+                Pdados *dado = campo->Pdados;
+                while (dado != NULL) {
+                    if (unidade->Status != NULL) {
+                        unidade->Status->Status = 'D'; //marcar excluido
+                    }
+                    dado = dado->prox;
+                }
+                campo = campo->prox;
+            }
+            limparmsg();
+			gotoxy(6,24);
+			printf("All records have been marked for deletion!, Press [SPACE]");
+	    	do{
+		    	gotoxy(1,21);
+		        c = getch();  
+	    	}while(c != 32);
+        }
     }
-
-    printf("Todos registros foram marcados para exclusão!\n");
 }
